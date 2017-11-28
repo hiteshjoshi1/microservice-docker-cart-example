@@ -1,0 +1,8 @@
+customer/.mvn
+customer/.settings
+.classpath
+.project
+inventory/.settings
+inventory/.mvn
+
+.springBeans
