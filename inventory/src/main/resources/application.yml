@@ -1,0 +1,41 @@
+# Spring properties
+spring:
+  application:
+     name: inventory-service
+  freemarker:
+    enabled: false           # Ignore Eureka dashboard FreeMarker templates
+  jpa:
+    hibernate:
+      ddl-auto: none  
+  datasource:
+    url: jdbc:mysql://localhost:32769/microservices_prod
+    username: root
+    password: test     
+#  thymeleaf:
+#    cache: false             # Allow Thymeleaf templates to be reloaded at runtime
+#    prefix: classpath:/challenges-server/templates/    # Trailing / mandatory
+#                              Template location for this application only
+
+# Map the error path to error template (for Thymeleaf)
+error:
+  path: /error
+
+# HTTP Server
+server:
+  port: 2222   # HTTP (Tomcat) port
+  display-name: Inventory
+
+# Discovery Server Access
+#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
+#  2. Define URL of registration server (defaultZone)
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
+  instance:
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+
+ 
+
+
+

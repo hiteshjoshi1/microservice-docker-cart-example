@@ -1,14 +1,15 @@
-package com.hitesh.microservices.inventory;
+package com.hitesh.microservices.invoice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
+
+@SpringBootApplication(scanBasePackages={"com.hitesh.microservices.invoice"})
 @EnableDiscoveryClient
-public class InventoryApplication {
+public class InvoiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InventoryApplication.class, args);
+		SpringApplication.run(InvoiceApplication.class, args);
 	}
 }
