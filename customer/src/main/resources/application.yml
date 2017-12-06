@@ -21,9 +21,9 @@ error:
   path: /error
 
 # HTTP Server
-server:
-  port: 3333   # HTTP (Tomcat) port
-  display-name: Customer
+#server:
+#  port: 3333   # HTTP (Tomcat) port
+#  display-name: Customer
 
 # Discovery Server Access
 #  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
@@ -31,7 +31,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:32770/eureka/ # using eureka instead of localhost
+      defaultZone: http://eureka:8761/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 

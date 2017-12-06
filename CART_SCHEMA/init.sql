@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS categories (
         REFERENCES unit_type (ID)
 );
 
-SELECT * FROM categories;
+
 
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE IF NOT EXISTS inventory (

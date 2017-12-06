@@ -2,7 +2,7 @@ eureka:
  image: springcloud/eureka
  container_name: eureka
  ports:
- - "1111:1111"
+ - "8761:8761"
  net: "microservicesnet"
 customer1:
  image: hiteshjoshi1/microservice-docker-cart-example
@@ -12,7 +12,7 @@ customer1:
  ports:
  - "2222:8080"
  volumes:
- - C:\\Users\\hitjoshi\\Desktop\\Microservices\\ci_output:/data
+ - /home/hitesh/jarloc:/data
  command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
 inventory1:
  image: hiteshjoshi1/microservice-docker-cart-example
@@ -22,7 +22,7 @@ inventory1:
  ports:
  - "3333:8080"
  volumes:
- - C:\\Users\\hitjoshi\\Desktop\\Microservices\\ci_output:/data
+ - /home/hitesh/jarloc:/data
  command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
 invoice1:
  image: hiteshjoshi1/microservice-docker-cart-example
@@ -32,5 +32,5 @@ invoice1:
  ports:
  - "4444:8080"
  volumes:
- - C:\\Users\\hitjoshi\\Desktop\\Microservices\\ci_output:/data
+ - /home/hitesh/jarloc:/data
  command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/invoice-0.0.1-SNAPSHOT.jar
