@@ -98,7 +98,8 @@ In this example, all my microservices connect to the same DB, but this can be ea
 __________________________________________________________________________________________________________________________________
 
 References and Citations- 
-
+https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/
+https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii
 
 
 
