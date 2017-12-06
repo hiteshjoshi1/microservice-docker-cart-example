@@ -21,7 +21,7 @@ To build and package a jar to target folder :<BR>
 
 
 To start the Mysql container: <BR>
-<b><code>docker run --name docker-mysql -e MYSQL_ROOT_PASSWORD=test -d mysql</code></b>
+<b><code>docker run --name docker-mysql -e MYSQL_ROOT_PASSWORD=test -P -d mysql</code></b>
 
 
 To Build the image from Docker File - Custom image as specified in the Dockerfile ---> (Note the .) <br>
