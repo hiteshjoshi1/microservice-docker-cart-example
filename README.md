@@ -26,12 +26,12 @@ Run init.sql
 
 Then Create a network , this should also be ideally part of docker compose
 
-
-sudo docker network create microservicesnet
-
+<div>
+<b><code>sudo docker network create microservicesnet</b></code>
+</div>
 Connect mysql to it -
 
-sudo docker network connect microservicesnet docker-mysql
+<div><b><code>sudo docker network connect microservicesnet docker-mysql</b></code></div>
 
 
 Commands ->
@@ -43,8 +43,8 @@ To build and package a jar to target folder :<BR>
 <b><code>mvn clean package</code></b>
 
 
-Copy all microservices jar to the place which is shared with the volume - Ideally this should be done througha CI JOb (TODO)
-cp customer-0.0.1-SNAPSHOT.jar.original /home/hitesh/jarloc
+Copy all microservices jar to the place which is shared with the volume - Ideally this should be done througha CI JOb (TODO) <br>
+<code>cp customer-0.0.1-SNAPSHOT.jar.original /home/hitesh/jarloc</code>
 
 
 
@@ -54,7 +54,7 @@ sudo docker-compose up -d
 
 Endpoints 
 eureka - http://localhost:2222/customers
-Customer - localhost: 
+Customer - localhost:localhost:2222/customer 
 Inventory - http://localhost:3333/inventory
 Invoice - http://localhost:4444/invoice
 
@@ -62,7 +62,7 @@ The Java 8 base image used to build the microservice containers is also checked 
 
 The base image can be built using
 
-docker build -t microservice/baseserviceimg .
+<div><b><code>docker build -t microservice/baseserviceimg .</code></b></div>
 
 I have pushed the base image in my docker repo and I am using it from there.
 
@@ -77,19 +77,22 @@ Building individual containers without docker compose
 To Build the image from Docker File - Custom image as specified in the Dockerfile ---> (Note the .) <br>
 
 1. Build(Or Rebuilding) Service Discovery Customer, Inventory , Invoice from the docker file .
-
-<b><code>docker build -t microservice/customer . </code></b>
-<b><code>docker build -t microservice/inventory . </code></b>
-<b><code>docker build -t microservice/invoice . </code></b>
-
+<div>
+<ul>
+<li><b><code>docker build -t microservice/customer . </code></b>
+<li><b><code>docker build -t microservice/inventory . </code></b>
+<li><b><code>docker build -t microservice/invoice . </code></b>
+</ul>
+</div>
 Building a container happens once, once it is built you can run it from the same folder and give it a name.
 
 To Run the  Custom Image, notice the linkage to the mysql container for microservices--><br>
-<b><code>docker run --name docker-discovery  -P -d microservice/serviceDiscovery</code></b>
-<b><code>docker run --name docker-customer --link docker-mysql:mysql -P -d microservice/customer</code></b>
-<b><code>docker run --name docker-inventory --link docker-mysql:mysql -P -d microservice/inventory</code></b>
-<b><code>docker run --name docker-invoice --link docker-mysql:mysql -P -d microservice/invoice</code></b>
-
+<ul>
+<li><b><code>docker run --name docker-discovery  -P -d microservice/serviceDiscovery</code></b>
+<li><b><code>docker run --name docker-customer --link docker-mysql:mysql -P -d microservice/customer</code></b>
+<li><b><code>docker run --name docker-inventory --link docker-mysql:mysql -P -d microservice/inventory</code></b>
+<li><b><code>docker run --name docker-invoice --link docker-mysql:mysql -P -d microservice/invoice</code></b>
+</ul>
 
 
 In this example, all my microservices connect to the same DB, but this can be easily changed above.
