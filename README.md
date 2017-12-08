@@ -50,21 +50,24 @@ Copy all microservices jar to the place which is shared with the volume - Ideall
 
 once you have all your jars in jarloc (Jar location), you can bring all the micro-services as well as the discovery server up with
 
-sudo docker-compose up -d
+<div><b><code>sudo docker-compose up -d</code></b></div>
 
 Endpoints 
-eureka - http://localhost:2222/customers
-Customer - localhost:localhost:2222/customer 
-Inventory - http://localhost:3333/inventory
-Invoice - http://localhost:4444/invoice
-
-The Java 8 base image used to build the microservice containers is also checked in
+<div>
+<ul>
+<li>Eureka - http://localhost:1111/eureka
+<li>Customer - localhost:localhost:2222/customer 
+<li>Inventory - http://localhost:3333/inventory
+<li>Invoice - http://localhost:4444/invoice
+</ul>
+</div>
+The Java 8 base image used to build the microservice containers is also checked in dockerhub and can be seprately downloaded as
+<div><b><code>docker pull hiteshjoshi1/microservice-docker-cart-example</code></b></div>
 
 The base image can be built using
 
 <div><b><code>docker build -t microservice/baseserviceimg .</code></b></div>
 
-I have pushed the base image in my docker repo and I am using it from there.
 
 
 ___________________________________________________________________________________________________________________________
