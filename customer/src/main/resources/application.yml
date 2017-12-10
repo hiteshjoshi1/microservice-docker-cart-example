@@ -54,7 +54,7 @@ eureka:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 
 server: # not really required. Tomcat by default starts at 8080
- port: 8080
+ port: 2222
 
 
 
