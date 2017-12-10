@@ -7,7 +7,7 @@ eureka:
  - "1111:8080"
  volumes:
  - /home/hitesh/jarloc:/data
- command: -jar /data/servicediscovery-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar
 customer1:
  image: hiteshjoshi1/microservice-docker-cart-example
  container_name: customer1
@@ -17,7 +17,7 @@ customer1:
  - "2222:8080"
  volumes:
  - /home/hitesh/jarloc:/data
- command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
 inventory1:
  image: hiteshjoshi1/microservice-docker-cart-example
  container_name: inventory1
@@ -27,7 +27,7 @@ inventory1:
  - "3333:8080"
  volumes:
  - /home/hitesh/jarloc:/data
- command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
 invoice1:
  image: hiteshjoshi1/microservice-docker-cart-example
  container_name: invoice1
@@ -37,4 +37,4 @@ invoice1:
  - "4444:8080"
  volumes:
  - /home/hitesh/jarloc:/data
- command: -jar -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/invoice-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/invoice-0.0.1-SNAPSHOT.jar
