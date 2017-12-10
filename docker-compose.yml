@@ -10,31 +10,28 @@ eureka:
  command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar
 customer1:
  image: hiteshjoshi1/microservice-docker-cart-example
+ hostname: customer1
  net: "microservicesnet"
  ports:
  - "2222:2222"
  volumes:
  - /home/hitesh/jarloc:/data
- links:
-  - docker-mysql
- command: -jar -Dspring.profiles.active=docker /data/customer-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
 inventory1:
  image: hiteshjoshi1/microservice-docker-cart-example
+ hostname: inventory1
  net: "microservicesnet"
  ports:
  - "3333:3333"
  volumes:
  - /home/hitesh/jarloc:/data
- links:
-  - docker-mysql
- command: -jar -Dspring.profiles.active=docker /data/inventory-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
 invoice1:
  image: hiteshjoshi1/microservice-docker-cart-example
+ hostname: invoice1
  net: "microservicesnet"
  ports:
  - "4444:4444"
  volumes:
  - /home/hitesh/jarloc:/data
- links:
-  - docker-mysql
- command: -jar -Dspring.profiles.active=docker  /data/invoice-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/invoice-0.0.1-SNAPSHOT.jar
