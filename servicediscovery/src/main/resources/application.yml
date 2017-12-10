@@ -1,15 +1,38 @@
-# Configure this Discovery Server
+#notice the use of profiles one for localhost, one for docker
+spring:
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: "off"  
+
+---
+
+spring:
+  profiles: dev
+  thymeleaf:
+    enabled: false
+  
+eureka:
+  instance:
+    hostname: localhost
+  client:  # Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false    
+server:
+  port: 1111
+    
+---
+
+spring:
+  profiles: docker
+  thymeleaf:
+    enabled: false
 eureka:
   instance:
     hostname: localhost
   client:  # Not a client, don't register with yourself
     registerWithEureka: false
     fetchRegistry: false
-     
-server:
-  port: 1111   # HTTP (Tomcat) port
 
-# Discovery Server Dashboard uses FreeMarker.  Don't want Thymeleaf templates
-spring:
-  thymeleaf:
-    enabled: false     # Disable Thymeleaf 
+server:
+  port: 8080    

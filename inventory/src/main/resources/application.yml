@@ -1,5 +1,14 @@
-# Spring properties
+#notice the use of profiles one for localhost, one for docker
 spring:
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: "off"  
+    
+---
+
+spring:
+  profiles: dev
   application:
      name: inventory-service
   freemarker:
@@ -8,34 +17,43 @@ spring:
     hibernate:
       ddl-auto: none  
   datasource:
-    url: jdbc:mysql://localhost:32768/microservices_prod
+    url: jdbc:mysql://localhost:3306/microservices_prod
     username: root
-    password: test     
-#  thymeleaf:
-#    cache: false             # Allow Thymeleaf templates to be reloaded at runtime
-#    prefix: classpath:/challenges-server/templates/    # Trailing / mandatory
-#                              Template location for this application only
-
-# Map the error path to error template (for Thymeleaf)
-error:
-  path: /error
-
-# HTTP Server
-#server:
-# port: 2222   # HTTP (Tomcat) port
-#  display-name: Inventory
-
-# Discovery Server Access
-#  1. DEV ONLY: Reduce the lease renewal interval to speed up registration
-#  2. Define URL of registration server (defaultZone)
+    password: test 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:8761/eureka/ # using eureka instead of localhost
+      defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
+  instance:
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+server:
+  port: 3333    
+
+    
+---
+
+spring:
+  profiles: docker
+  application:
+     name: inventory-service
+  freemarker:
+    enabled: false           # Ignore Eureka dashboard FreeMarker templates
+  jpa:
+    hibernate:
+      ddl-auto: none  
+  datasource:   #docker instance of mysql
+    url: jdbc:mysql://localhost:32768/microservices_prod
+    username: root
+    password: test 
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
 
- 
-
+server: # not really required. Tomcat by default starts at 8080
+ port: 8080
 
 

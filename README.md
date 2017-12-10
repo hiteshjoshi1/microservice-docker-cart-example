@@ -10,7 +10,12 @@ I am going to use Spring Netflix OSS to build microservices API for a very basic
 6. Spring Hysterix circuit breaker
 7. Spring Hysterix Dashboard
 8. Spring ZuulProxy
-9. Stretch Goal - Async API aggregator written in RxJava
+9.Spring Turbine
+10. Spring config
+11.Stretch Goal - Async API aggregator written in RxJava
+
+Some dev ops -
+Jenkins
 
 
 As of now I dont how to populate a docker container with mysql with data, so I am not including the mysql container in my docker compose - TODO
@@ -62,7 +67,7 @@ Endpoints
 </ul>
 </div>
 The Java 8 base image used to build the microservice containers is also checked in dockerhub and can be seprately downloaded as
-<div><b><code>docker pull hiteshjoshi1/microservice-docker-cart-example</code></b></div>
+<div><b><code>docker pull hiteshjoshi1/microservice-docker-cart-example</code></b></div
 
 The base image can be built using
 

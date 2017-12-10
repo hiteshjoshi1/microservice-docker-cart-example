@@ -1,9 +1,13 @@
 eureka:
- image: springcloud/eureka
+ image: hiteshjoshi1/microservice-docker-cart-example
  container_name: eureka
- ports:
- - "8761:8761"
+ hostname: eureka
  net: "microservicesnet"
+ ports:
+ - "1111:8080"
+ volumes:
+ - /home/hitesh/jarloc:/data
+ command: -jar /data/servicediscovery-0.0.1-SNAPSHOT.jar
 customer1:
  image: hiteshjoshi1/microservice-docker-cart-example
  container_name: customer1
