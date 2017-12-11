@@ -26,6 +26,8 @@ eureka:
       defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true  
+
 server:
   port: 3333    
 

@@ -26,6 +26,8 @@ eureka:
       defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true  # DO NOT DO THIS IN PRODUCTION
+
 server:
   port: 4444    
 
@@ -52,6 +54,7 @@ eureka:
       defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true
 
 server: # not really required. Tomcat by default starts at 8080
  port: 4444
