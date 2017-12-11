@@ -26,8 +26,6 @@ eureka:
       defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-    metadataMap:
-    instanceId: customer:${random.value}
   preferIpAddress: true
 server:
   port: 2222    
@@ -55,11 +53,9 @@ eureka:
       defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-    metadataMap:
-    instanceId: customer:${random.value}
-  preferIpAddress: true
+    preferIpAddress: true
 
- server:
+server:
   port: 2222    
    
 
