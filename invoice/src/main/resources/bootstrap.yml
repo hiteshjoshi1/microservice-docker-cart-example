@@ -1,0 +1,9 @@
+#notice the use of profiles one for localhost, one for docker
+spring:
+  application:
+     name: invoice-service
+  cloud:
+    config:
+      uri: http://localhost:5555
+      enabled: true 
+  

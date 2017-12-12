@@ -1,4 +1,14 @@
 #notice the use of profiles one for localhost, one for docker
+server:
+  port: ${discovery.port}
+  
+eureka:
+  instance:
+    hostname: ${discovery.hostname:localhost}
+  client:  # Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false  
+  
 spring:
   profiles:
     active: "dev"
@@ -9,30 +19,19 @@ spring:
 
 spring:
   profiles: dev
+  application:
+     name: discovery-service
   thymeleaf:
     enabled: false
-  
-eureka:
-  instance:
-    hostname: localhost
-  client:  # Not a client, don't register with yourself
-    registerWithEureka: false
-    fetchRegistry: false    
-server:
-  port: 1111
-    
+        
+
 ---
 
 spring:
   profiles: docker
+  application:
+     name: discovery-service
   thymeleaf:
     enabled: false
-eureka:
-  instance:
-    hostname: localhost
-  client:  # Not a client, don't register with yourself
-    registerWithEureka: false
-    fetchRegistry: false
-server:
-  port: 1111
-  
+    
+

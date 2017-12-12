@@ -7,7 +7,17 @@ eureka:
  - "1111:1111"
  volumes:
  - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar
+ command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar 
+config:
+ image: hiteshjoshi1/microservice-docker-cart-example
+ container_name: config
+ hostname: config
+ net: "microservicesnet"
+ ports:
+ - "5555:5555"
+ volumes:
+ - /home/hitesh/jarloc:/data
+ command: -jar -Dspring.profiles.active=docker /data/config-0.0.1-SNAPSHOT.jar 
 customer1:
  image: hiteshjoshi1/microservice-docker-cart-example
  container_name: customer1

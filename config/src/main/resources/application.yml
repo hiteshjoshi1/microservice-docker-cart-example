@@ -1,0 +1,52 @@
+server:
+  port: 5555
+
+spring:
+  profiles:
+    active: "dev"
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config       
+    
+  main:
+    banner-mode: "off"  
+    
+---
+spring:
+  profiles: dev
+  
+
+eureka:
+  instance:
+    hostname: configserver
+    preferIpAddress: true 
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+
+management:
+   security:
+     enabled: false
+---
+ 
+spring:
+  profiles: docker
+
+eureka:
+  instance:
+    hostname: configserver
+    preferIpAddress: true 
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eureka:1111/eureka/
+      
+management:
+   security:
+     enabled: false      
+      

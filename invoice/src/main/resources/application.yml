@@ -4,13 +4,18 @@ spring:
     active: "dev"
   main:
     banner-mode: "off"  
-    
+eureka:
+   instance:
+       leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+       preferIpAddress: true 
+  
+server:
+  port: ${invoice.port}    
+        
 ---
 
 spring:
   profiles: dev
-  application:
-     name: invoice-service
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   jpa:
@@ -23,40 +28,26 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
-  instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-    preferIpAddress: true  # DO NOT DO THIS IN PRODUCTION
+      defaultZone: http://localhost:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
 
-server:
-  port: 4444    
 
     
 ---
 
 spring:
   profiles: docker
-  application:
-     name: invoice-service
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   jpa:
     hibernate:
       ddl-auto: none  
   datasource:   #docker instance of mysql
-    url: jdbc:mysql://localhost:32768/microservices_invoice
+    url: ${invoice.docker.datasource}   #jdbc:mysql://localhost:32768/microservices_invoice
     username: root
     password: test 
     
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
-  instance:
-    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
-    preferIpAddress: true
-
-server: # not really required. Tomcat by default starts at 8080
- port: 4444
-
+      defaultZone: http://eureka:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
 
