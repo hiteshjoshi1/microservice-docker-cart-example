@@ -49,5 +49,5 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
+      defaultZone: http://eureka:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
 
