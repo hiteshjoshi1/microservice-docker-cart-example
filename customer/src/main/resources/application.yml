@@ -5,7 +5,7 @@ spring:
   main:
     banner-mode: "off"  
 server:
-  port: ${customer.port}     
+  port: 2222 #${customer.port}     
     
 ---
 
@@ -40,14 +40,14 @@ spring:
     hibernate:
       ddl-auto: none  
   datasource:   #docker instance of mysql
-    url: jdbc:mysql://localhost:32768/microservices_cust
+    url: jdbc:mysql://localhost:3306/microservices_cust
     username: root
     password: test 
     
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:${customer.discovery.port}/eureka/ # using eureka instead of localhost
+      defaultZone: http://eureka:${customer.discovery.port}/eureka/ # using eureka instead of localhost
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
     preferIpAddress: true

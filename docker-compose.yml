@@ -1,47 +1,64 @@
-eureka:
- image: hiteshjoshi1/microservice-docker-cart-example
- container_name: eureka
- hostname: eureka
- net: "microservicesnet"
- ports:
- - "1111:1111"
- volumes:
- - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar 
-config:
- image: hiteshjoshi1/microservice-docker-cart-example
- container_name: config
- hostname: config
- net: "microservicesnet"
- ports:
- - "5555:5555"
- volumes:
- - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker /data/config-0.0.1-SNAPSHOT.jar 
-customer1:
- image: hiteshjoshi1/microservice-docker-cart-example
- container_name: customer1
- net: "microservicesnet"
- ports:
- - "2222:2222"
- volumes:
- - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
-inventory1:
- image: hiteshjoshi1/microservice-docker-cart-example
- container_name: inventory1
- net: "microservicesnet"
- ports:
- - "3333:3333"
- volumes:
- - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
-invoice1:
- image: hiteshjoshi1/microservice-docker-cart-example
- container_name: invoice1
- net: "microservicesnet"
- ports:
- - "4444:4444"
- volumes:
- - /home/hitesh/jarloc:/data
- command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/invoice-0.0.1-SNAPSHOT.jar
+version : "2.1"
+services:
+  db:
+    image: mysql
+    container_name: docker-mysql
+    restart: always
+    ports:
+       - "3306:3306"
+    restart: always
+    networks:
+      - microservicesnet
+    volumes:
+        -  ./init_schema:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+
+  eureka:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: eureka
+    hostname: eureka
+    ports:
+      - "1111:1111"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar 
+
+  config:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: config
+    hostname: config
+    ports:
+       - "5555:5555"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker /data/config-0.0.1-SNAPSHOT.jar
+    healthcheck:
+      test: curl --fail -s http://localhost:5555/info || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3 
+
+  customer1:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: customer1
+    ports:
+     - "2222:2222"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_cust -Dspring.datasource.password=test /data/customer-0.0.1-SNAPSHOT.jar
+    depends_on:
+       db:
+         condition: service_started
+       config:
+         condition: service_healthy
+
+
+networks:
+  microservicesnet:

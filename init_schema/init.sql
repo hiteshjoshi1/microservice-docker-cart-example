@@ -1,3 +1,7 @@
+#drop database microservices_cust;
+#drop database microservices_invoice;
+#drop database microservices_prod;
+
 CREATE SCHEMA microservices_prod;
 
 USE microservices_prod;
@@ -52,7 +56,7 @@ CREATE TABLE IF NOT EXISTS invoice (
     TAX_AMT INTEGER,
     CASHIER_NAME VARCHAR(500),
     FOREIGN KEY (MODE_PAY_ID)
-        REFERENCES invoice (ID)
+        REFERENCES mode_of_pay (ID)
 );
 
 
@@ -69,6 +73,8 @@ DROP TABLE IF EXISTS address;
 CREATE TABLE IF NOT EXISTS address(ADDRESS_ID BIGINT AUTO_INCREMENT PRIMARY KEY, CUST_ID BIGINT NOT NULL,APARTMENT_NAME VARCHAR(500),
 STREET_NAME VARCHAR(800),CITY VARCHAR(200),STATE VARCHAR(20),PIN INTEGER(10), FOREIGN KEY(CUST_ID) REFERENCES customer(ID));
 
+commit;
+
 /*DML---------------- */
 
 
@@ -77,8 +83,6 @@ USE microservices_prod;
 INSERT INTO unit_type(UNIT_NAME)  VALUES ('Per Unit');
  
 INSERT INTO unit_type(UNIT_NAME)  VALUES ('Per Kg');
- 
-SELECT * FROM unit_type;
 
 
 INSERT INTO categories(unit_type_ID,CATEGORY_NAME,CONTROLLED)
@@ -92,8 +96,8 @@ INSERT INTO categories(unit_type_ID,CATEGORY_NAME,CONTROLLED)
   
 INSERT INTO categories(unit_type_ID,CATEGORY_NAME,CONTROLLED)
  VALUES (1,'MEDICINES',true);
- 
-SELECT * FROM categories;
+
+commit;
 
 /*run inventory inserts in a seprate command*/
 INSERT INTO inventory(
@@ -134,14 +138,15 @@ INSERT INTO inventory(
     9,
     4,    
     3); 
-	
-	USE microservices_cust;
+commit;
+
+USE microservices_cust;
 INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Hitesh Joshi',31,951911009); 
 
 INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
  VALUES (1,'Hubris Residency','HSR layout','Bangalore','Karanataka',560037); 
  
- 
+ commit;
  /*run customer inserts in a separate command*/
  INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Deepika Joshi',30,989220110); 
 
@@ -161,19 +166,21 @@ SET
     PRIMARY_ADDR_ID = 1
 WHERE
     ID = 1;
+commit;
 	
 USE microservices_invoice;
 insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Cash','OTC cash settlement');
 insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Card','OTC card settlement');
 insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Online','Online through payment gateway');
 insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Wallet','OTC through wallet');
+commit;
 
-select * from mode_of_pay;
 
 /*run invoice inserts in a seprate command*/
 
 insert into invoice(CUST_ID,ITEM_ID,QUANTITY,DATE_OF_PURCHASE,MODE_PAY_ID,TAX_AMT,CASHIER_NAME) values(1,4,10,NOW(),2,5,'Venu Babu');
 insert into invoice(CUST_ID,ITEM_ID,QUANTITY,DATE_OF_PURCHASE,MODE_PAY_ID,TAX_AMT,CASHIER_NAME) values(1,3,10,'2017-10-01 00:00:00',2,5,'Venu Babu');
+commit;
 
-select * from invoice;
+
 

@@ -8,7 +8,14 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config       
+          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config
+        health:
+          repositories:
+             customer-service:
+              label: master
+             discovery-service:
+               label: master
+
     
   main:
     banner-mode: "off"  

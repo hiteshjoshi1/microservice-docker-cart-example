@@ -1,10 +1,10 @@
 #notice the use of profiles one for localhost, one for docker
 server:
-  port: ${discovery.port}
+  port: 1111
   
 eureka:
   instance:
-    hostname: ${discovery.hostname:localhost}
+    hostname: localhost         #${discovery.hostname:localhost}
   client:  # Not a client, don't register with yourself
     registerWithEureka: false
     fetchRegistry: false  
