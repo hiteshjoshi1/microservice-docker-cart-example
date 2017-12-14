@@ -1,10 +1,26 @@
 #notice the use of profiles one for localhost, one for docker
 spring:
+  profiles:
+    active: "dev"
   application:
-     name: inventory-service
-  cloud:
-    config:
-      uri: http://config:5555
-      enabled: true 
+    name: inventory-service 
 encrypt:
   failOnError: false
+    
+---    
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:5555
+      enabled: true 
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    config:
+      uri: http://config:5555 # docker url has hostname
+      enabled: true 
+    

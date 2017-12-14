@@ -44,7 +44,7 @@ Working Endpoints so far :-
 <li>Customer - localhost:localhost:2222/customer </li>
 <li>Inventory - http://localhost:3333/inventory </li>
 <li>Invoice - http://localhost:4444/invoice</li>
-<li>Config - http://localhost:5555/config/dev</li>
+<li>Config - http://localhost:5555/customer-service/dev</li>
 <li>
 </ul>
 </div>
