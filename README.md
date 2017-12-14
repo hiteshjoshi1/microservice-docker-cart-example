@@ -2,24 +2,55 @@ Project for a Dockerized Microservics
 
 I am going to use Spring Netflix OSS to build microservices API for a very basic Shopping cart application
 
-1. Docker
-2. Spring Boot with MySql - both deployed as docker containers
-3. Spring Netflix Eureka Server
-4. Spring Eureka Client
+Goals: -
+1. Docker for deployment
+2. Spring Boot Cloud Config - deployed as docker container
+3. Spring Netflix Eureka Server - deployed as docker container
+4. Spring Eureka Client - deployed as docker container
 5. Spring Feign Client
 6. Spring Hysterix circuit breaker
 7. Spring Hysterix Dashboard
 8. Spring ZuulProxy
-9.Spring Turbine
-10. Spring config
-11.Stretch Goal - Async API aggregator written in RxJava
+9. Spring Turbine
+10. mysql - deployed as docker container and populated via script on start up
+11. Stretch Goal - Async API aggregator written in RxJava
+12. Stretch Goal - Jenkins
+13. Spring sleuth  And ELK
+14. Distributed caching
 
-Some dev ops -
-Jenkins
 
+<div>
+I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory 
+from where they can be mounted to docker volumes.
+</div>
 
-As of now I dont how to populate a docker container with mysql with data, so I am not including the mysql container in my docker compose - TODO
+<b>install.sh</b> will also take care of bringing all containers using docker-compose. 
+So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. and run .install.sh.
 
+Under the hood this is what happens -
+1. Builds all microservices, eureka server, config
+2. Bring up mysql
+3. Populate mysql with DDL and DML if not done already
+4. Bring up config server
+5. Bring up Eureka Server
+6. Bring up microservices - Eureka clients. 
+7. Add them into one network so that they can communicate
+
+Working Endpoints so far :-
+<div>
+<ul>
+<li>Eureka - http://localhost:1111/eureka
+<li>Customer - localhost:localhost:2222/customer 
+<li>Inventory - http://localhost:3333/inventory
+<li>Invoice - http://localhost:4444/invoice
+</ul>
+</div>
+
+-------------------------------------------------------------------------------------------------------------
+
+This old doc is here for doc purpose only
+
+Old ->
 To start the Mysql container: <BR>
 <b><code>docker run --name docker-mysql -e MYSQL_ROOT_PASSWORD=test -P -d mysql</code></b>
 
@@ -57,15 +88,7 @@ once you have all your jars in jarloc (Jar location), you can bring all the micr
 
 <div><b><code>sudo docker-compose up -d</code></b></div>
 
-Endpoints 
-<div>
-<ul>
-<li>Eureka - http://localhost:1111/eureka
-<li>Customer - localhost:localhost:2222/customer 
-<li>Inventory - http://localhost:3333/inventory
-<li>Invoice - http://localhost:4444/invoice
-</ul>
-</div>
+
 The Java 8 base image used to build the microservice containers is also checked in dockerhub and can be seprately downloaded as
 <div><b><code>docker pull hiteshjoshi1/microservice-docker-cart-example</code></b></div
 
