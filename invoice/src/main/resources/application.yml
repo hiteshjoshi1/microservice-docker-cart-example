@@ -13,7 +13,7 @@ eureka:
        preferIpAddress: true 
   
 server:
-  port: 4444  
+  port: ${invoice.port}  
         
 ---
 
@@ -29,7 +29,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:1111/eureka/ # using eureka instead of localhost
+      defaultZone: http://localhost:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
 
 
     
@@ -48,6 +48,6 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:1111/eureka/ # using eureka instead of localhost
+      defaultZone: http://eureka:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
 
     
