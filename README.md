@@ -25,7 +25,8 @@ from where they can be mounted to docker volumes.
 </div>
 
 <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
-So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. and run .install.sh.
+So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. Finally run .install.sh.
+TODO - modify the install.sh so that it creates the working directory
 
 Under the hood this is what happens -
 1. Builds all microservices, eureka server, config
@@ -39,10 +40,12 @@ Under the hood this is what happens -
 Working Endpoints so far :-
 <div>
 <ul>
-<li>Eureka - http://localhost:1111/eureka
-<li>Customer - localhost:localhost:2222/customer 
-<li>Inventory - http://localhost:3333/inventory
-<li>Invoice - http://localhost:4444/invoice
+<li>Eureka - http://localhost:1111/eureka</li>
+<li>Customer - localhost:localhost:2222/customer </li>
+<li>Inventory - http://localhost:3333/inventory </li>
+<li>Invoice - http://localhost:4444/invoice</li>
+<li>Config - http://localhost:5555/config/dev</li>
+<li>
 </ul>
 </div>
 
@@ -131,9 +134,11 @@ In this example, all my microservices connect to the same DB, but this can be ea
 
 __________________________________________________________________________________________________________________________________
 
-References and Citations- 
-https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/
-https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii
+<b>References and Citations - </b> <br>
+https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/ <br>
+https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii <br>
+https://github.com/kbastani/spring-cloud-microservice-example</br>
+https://github.com/sqshq/PiggyMetrics</br>
 
 
 

@@ -4,13 +4,6 @@ spring:
     active: "dev"
   main:
     banner-mode: "off"  
-server:
-  port: 2222 #${customer.port}     
-    
----
-
-spring:
-  profiles: dev
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   jpa:
@@ -19,7 +12,14 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/microservices_cust
     username: root
-    password: test
+    password: test    
+
+server:
+  port: 2222 #${customer.port}       
+---
+
+spring:
+  profiles: dev
      
 eureka:
   client:
@@ -34,15 +34,6 @@ eureka:
 
 spring:
   profiles: docker
-  freemarker:
-    enabled: false           # Ignore Eureka dashboard FreeMarker templates
-  jpa:
-    hibernate:
-      ddl-auto: none  
-  datasource:   #docker instance of mysql
-    url: jdbc:mysql://localhost:3306/microservices_cust
-    username: root
-    password: test 
     
 eureka:
   client:
