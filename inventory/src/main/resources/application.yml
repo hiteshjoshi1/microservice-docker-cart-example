@@ -1,0 +1,49 @@
+#notice the use of profiles one for localhost, one for docker
+spring:
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: "off"  
+  freemarker:
+    enabled: false           # Ignore Eureka dashboard FreeMarker templates
+  jpa:
+    hibernate:
+      ddl-auto: none    
+eureka: 
+   instance:
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true    
+    
+server:
+  port: 3333      
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservices_prod
+    username: root
+    password: test 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/     
+  
+---
+
+spring:
+  profiles: docker
+  datasource:   #docker instance of mysql
+    url: jdbc:mysql://localhost:32768/microservices_prod  
+    username: root
+    password: test 
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:1111/eureka/     # using eureka instead of localhost
+
+
+
+
+    
