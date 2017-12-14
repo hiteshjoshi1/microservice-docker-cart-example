@@ -6,9 +6,7 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
-  jpa:
-    hibernate:
-      ddl-auto: none    
+  
 eureka:
    instance:
        leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
@@ -25,6 +23,9 @@ spring:
     url: jdbc:mysql://localhost:3306/microservices_invoice
     username: root
     password: test 
+  jpa:
+    hibernate:
+      ddl-auto: none    
 eureka:
   client:
     serviceUrl:
@@ -40,6 +41,9 @@ spring:
     url: jdbc:mysql://localhost:32768/microservices_invoice
     username: root
     password: test 
+  jpa:
+    hibernate:
+      ddl-auto: none        
     
 eureka:
   client:

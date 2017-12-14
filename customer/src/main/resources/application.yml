@@ -6,6 +6,13 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
+ 
+server:
+  port: 2222    
+---
+
+spring:
+  profiles: dev
   jpa:
     hibernate:
       ddl-auto: none  
@@ -13,13 +20,6 @@ spring:
     url: jdbc:mysql://localhost:3306/microservices_cust
     username: root
     password: test    
-
-server:
-  port: 2222    
----
-
-spring:
-  profiles: dev
      
 eureka:
   client:
@@ -28,12 +28,20 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
     preferIpAddress: true
-
+ 
     
 ---
 
 spring:
   profiles: docker
+  jpa:
+    hibernate:
+      ddl-auto: none  
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservices_cust
+    username: root
+    password: test    
+  
     
 eureka:
   client:
