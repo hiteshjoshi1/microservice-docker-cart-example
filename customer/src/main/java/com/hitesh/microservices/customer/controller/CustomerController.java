@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.hitesh.microservices.customer.models.Customer;
+import com.hitesh.microservices.customer.models.Invoice;
 import com.hitesh.microservices.customer.repository.CustomerRepository;
+import com.hitesh.microservices.customer.services.InvoiceService;
 
 /**
  * @author Hitesh Joshi
@@ -20,6 +23,9 @@ import com.hitesh.microservices.customer.repository.CustomerRepository;
 public class CustomerController {
 	@Autowired
 	CustomerRepository customerRepository;
+	
+	@Autowired
+	InvoiceService invoiceService;
 	
     @RequestMapping(value="/customers", method= RequestMethod.GET, produces = "application/json")
     public Iterable<Customer> getAllCustomers(){        
@@ -40,4 +46,10 @@ public class CustomerController {
     public Customer addCustomer(@RequestBody Customer customer){
            return customerRepository.save(customer);
     }
+    
+    @RequestMapping(value="/customers/{id}/orders", method= RequestMethod.GET, produces = "application/json")
+    public List<Invoice> getCustomerOrders(@PathVariable("id") String id){        
+        return invoiceService.getInvoices(id);
+    }
+    
 }

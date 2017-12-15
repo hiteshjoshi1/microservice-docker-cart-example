@@ -24,15 +24,3 @@ spring:
       uri: http://config:5555
       enabled: true 
     
-
-
-
-#spring:
-#  application:
-#     name: invoice-service
-#  cloud:
-#    config:
-#      uri: http://config:5555
-#      enabled: true 
-#encrypt:
-#  failOnError: false

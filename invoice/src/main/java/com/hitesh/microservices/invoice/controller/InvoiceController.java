@@ -1,5 +1,7 @@
 package com.hitesh.microservices.invoice.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,13 +31,13 @@ public class InvoiceController {
         return invoiceRepository.findOne(Long.parseLong(id));
     }
     
-//    @RequestMapping(value="/Invoice/name/{name}", method= RequestMethod.GET, produces = "application/json")
-//    public List<Invoice> getInvoiceByName(@PathVariable("name") String InvoiceName){        
-//        return InvoiceRepository.findByInvoiceName(InvoiceName);
-//    }
+    @RequestMapping(value="/invoice/custid/{id}", method= RequestMethod.GET, produces = "application/json")
+    public List<Invoice> getInvoiceByCustomer(@PathVariable("id") String customerId){        
+        return invoiceRepository.findByCustomerId(Long.parseLong(customerId));
+    }
     
     @RequestMapping(value="/invoice/new/", method= RequestMethod.POST, produces = "application/json",consumes = "application/json")
-    public Invoice addInvoice(@RequestBody Invoice Invoice){
-           return invoiceRepository.save(Invoice);
+    public Invoice addInvoice(@RequestBody Invoice invoice){
+           return invoiceRepository.save(invoice);
     }
 }
