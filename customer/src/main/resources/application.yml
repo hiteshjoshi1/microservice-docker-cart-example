@@ -8,7 +8,11 @@ spring:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
  
 server:
-  port: ${customer.port}    
+  port: ${customer.port} 
+  
+feign:
+    hystrix:       # even if eclipse is complaining, this is required
+        enabled: true     
 ---
 
 spring:

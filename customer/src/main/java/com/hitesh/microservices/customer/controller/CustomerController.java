@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
+import com.hitesh.microservices.customer.client.InvoiceServiceClient;
 import com.hitesh.microservices.customer.models.Customer;
 import com.hitesh.microservices.customer.models.Invoice;
 import com.hitesh.microservices.customer.repository.CustomerRepository;
@@ -26,6 +26,9 @@ public class CustomerController {
 	
 	@Autowired
 	InvoiceService invoiceService;
+	
+	@Autowired
+	InvoiceServiceClient invoiceServiceClient;
 	
     @RequestMapping(value="/customers", method= RequestMethod.GET, produces = "application/json")
     public Iterable<Customer> getAllCustomers(){        
@@ -48,8 +51,14 @@ public class CustomerController {
     }
     
     @RequestMapping(value="/customers/{id}/orders", method= RequestMethod.GET, produces = "application/json")
-    public List<Invoice> getCustomerOrders(@PathVariable("id") String id){        
-        return invoiceService.getInvoices(id);
+    public List<Invoice> getCustomerOrders(@PathVariable("id") String id){    
+  
+//    System.out.println("Calling a load balanced Rest template");	
+//        return invoiceService.getInvoices(id);
+    	
+    	System.out.println("Calling feign client");
+    	 return invoiceServiceClient.getInvoices(id);
+    	
     }
     
 }
