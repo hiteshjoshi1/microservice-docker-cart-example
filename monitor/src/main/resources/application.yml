@@ -16,15 +16,41 @@ logging:
     ROOT: INFO
     org.springframework.web: DEBUG
 
+eureka: 
+   instance:
+    leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
+    preferIpAddress: true        
+    
+spring:
+  profiles:
+    active: "dev"    
+---
+spring:
+  profiles: dev
+  
 eureka:
   client:
       serviceUrl:
          defaultZone: http://localhost:${discovery.port}/eureka/ # using eureka instead of localhost
 
 turbine:
+  appConfig: customer-service,invoice-service
   aggregator:
-    clusterConfig: SAMPLE-HYSTRIX-AGGREGATE
-  appConfig: SAMPLE-HYSTRIX-AGGREGATE  
+    clusterConfig: CUSTOMER-SERVICE,INVOICE-SERVICE
+  
+---
+spring:
+  profiles: docker  
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:${discovery.port}/eureka/     # using eureka instead of localhost
+
+turbine:
+  appConfig: customer-service,invoice-service
+  aggregator:
+    clusterConfig: CUSTOMER-SERVICE,INVOICE-SERVICE  
   
     #Region where eureka is deployed -For AWS specify one of the AWS regions, for other datacenters specify a arbitrary string
     #indicating the region.This is normally specified as a -D option (eg) -Deureka.region=us-east-1
@@ -36,7 +62,7 @@ turbine:
 
     #Change this if you want to use a DNS based lookup for determining other eureka servers. For example
     #of specifying the DNS entries, check the eureka-client-test.properties, eureka-client-prod.properties
-    #shouldUseDns: false
+#    #shouldUseDns: false
 
 #    us-east-1:
 #      availabilityZones: default
