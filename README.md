@@ -45,9 +45,17 @@ Working Endpoints so far :-
 <li>Inventory - http://localhost:3333/inventory </li>
 <li>Invoice - http://localhost:4444/invoice</li>
 <li>Config - http://localhost:5555/customer-service/dev</li>
-<li>
+<li>Hystrix Monitor - http://localhost:7777/hystrix</li>
+<li>Endpoint with a Circuit breaker and fallback - http://localhost:2222/customers/1/orders</li>
 </ul>
 </div>
+
+Docker config - http://localhost:5555/customer-service/docker <br>
+Hystrix Monitor - We need to provide the application that needs to be montored. <br>
+Please input - http://localhost:2222/hystrix.stream<br>
+
+Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
+
 
 -------------------------------------------------------------------------------------------------------------
 

@@ -1,0 +1,26 @@
+#notice the use of profiles one for localhost, one for docker
+spring:
+  profiles:
+    active: "dev"
+  application:
+    name: monitor-service
+encrypt:
+  failOnError: false
+    
+---    
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:5555
+      enabled: true 
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    config:
+      uri: http://config:5555
+      enabled: true 
+    

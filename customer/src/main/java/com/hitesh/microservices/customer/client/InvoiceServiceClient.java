@@ -19,6 +19,7 @@ import com.hitesh.microservices.customer.models.Invoice;
  * @author hitjoshi
  *
  */
+// for feign client we do not need @HystrixCommand
 @FeignClient(name = "invoice-service",
 fallback = InvoiceServiceClient.InvoiceClientFallback.class)
 public interface InvoiceServiceClient {

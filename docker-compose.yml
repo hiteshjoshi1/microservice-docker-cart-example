@@ -58,6 +58,8 @@ services:
          condition: service_started
        config:
          condition: service_healthy
+       invoice1:
+         condition: service_started  
 
   inventory1:
     image: hiteshjoshi1/microservice-docker-cart-example
@@ -90,6 +92,25 @@ services:
          condition: service_started
        config:
          condition: service_healthy
+         
+   monitor:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: monitor
+    ports:
+     - "7777:7777"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_invoice -Dspring.datasource.password=test /data/monitor-0.0.1-SNAPSHOT.jar
+    depends_on:
+       db:
+         condition: service_started
+       config:
+         condition: service_healthy
+       customer1:
+         condition: service_started  
+         
 
 
 networks:
