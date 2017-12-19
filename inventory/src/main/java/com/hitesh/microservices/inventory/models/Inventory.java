@@ -4,6 +4,7 @@
 package com.hitesh.microservices.inventory.models;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +41,7 @@ public class Inventory implements Serializable {
 
 
 	@Column(name="UNIT_PRICE", nullable= true)
-	private Double unitPrice;
+	private BigInteger unitPrice;
 
 	@Column(name="PURCHASE_PRICE", nullable= true)
 	private Double purchasePrice;
@@ -80,11 +81,11 @@ public class Inventory implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Double getUnitPrice() {
+	public BigInteger getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
+	public void setUnitPrice(BigInteger unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 

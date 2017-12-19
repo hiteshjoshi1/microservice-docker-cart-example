@@ -1,4 +1,4 @@
-package com.hitesh.microservices.customer.models;
+package com.hitesh.microservices.customer.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -43,8 +43,7 @@ private ModeOfPay modeOfPay;
 private Double taxAmount;
 @JsonProperty("cashierName")
 private String cashierName;
-@JsonProperty("paymentMode")
-private PaymentMode paymentMode;
+
 @JsonIgnore
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -128,15 +127,6 @@ public void setCashierName(String cashierName) {
 this.cashierName = cashierName;
 }
 
-@JsonProperty("paymentMode")
-public PaymentMode getPaymentMode() {
-return paymentMode;
-}
-
-@JsonProperty("paymentMode")
-public void setPaymentMode(PaymentMode paymentMode) {
-this.paymentMode = paymentMode;
-}
 
 @JsonAnyGetter
 public Map<String, Object> getAdditionalProperties() {

@@ -1,4 +1,4 @@
-package com.hitesh.microservices.customer.models;
+package com.hitesh.microservices.customer.dto;
 
 
 import java.util.HashMap;

@@ -53,9 +53,15 @@ Working Endpoints so far :-
 Docker config - http://localhost:5555/customer-service/docker <br>
 Hystrix Monitor - We need to provide the application that needs to be montored. <br>
 Please input - http://localhost:2222/hystrix.stream<br>
+If you are in docker - input http://172.20.0.7:2222/hystrix.stream <br>
+
+
 
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
+
+for turbine based monitoring
+http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
 
 -------------------------------------------------------------------------------------------------------------
 

@@ -36,7 +36,7 @@ eureka:
 turbine:
   appConfig: customer-service,invoice-service
   aggregator:
-    clusterConfig: CUSTOMER-SERVICE,INVOICE-SERVICE
+    clusterConfig: CUSTOMER-SERVICE,INVOICE-SERVICE, INVENTORY-SERVICE
   
 ---
 spring:

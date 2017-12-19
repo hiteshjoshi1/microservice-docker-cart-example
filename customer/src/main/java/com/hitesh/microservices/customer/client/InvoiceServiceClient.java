@@ -5,6 +5,7 @@ package com.hitesh.microservices.customer.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.MediaType;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.hitesh.microservices.customer.models.Invoice;
+import com.hitesh.microservices.customer.controller.CustomerController;
+import com.hitesh.microservices.customer.dto.Invoice;
 
 /**
  * @author hitjoshi
@@ -23,6 +25,10 @@ import com.hitesh.microservices.customer.models.Invoice;
 @FeignClient(name = "invoice-service",
 fallback = InvoiceServiceClient.InvoiceClientFallback.class)
 public interface InvoiceServiceClient {
+	
+     Logger logger = Logger.getLogger(CustomerController.class
+            .getName());
+	
 
 	@RequestMapping(method = RequestMethod.GET, value = "/invoice/custid/{custid}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	List<Invoice> getInvoices(@PathVariable("custid") String custid);
@@ -37,9 +43,7 @@ public interface InvoiceServiceClient {
 		@Override	
 		public List<Invoice> getInvoices(String custId) {
 			List<Invoice> invoiceList = new ArrayList<Invoice>();
-			Invoice invoice  = new Invoice();
-			invoice.setCashierName("NO records found");
-			invoiceList.add(invoice);
+			logger.info("Service is down, please try later");
 			return invoiceList;
 		}
 	}

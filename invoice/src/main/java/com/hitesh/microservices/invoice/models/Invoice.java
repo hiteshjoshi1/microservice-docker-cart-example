@@ -34,24 +34,16 @@ public class Invoice implements Serializable {
 	@Column(name="CUST_ID")
 	private Long customerId;
 
-	@Column(name="ITEM_ID")
-	private Long itemId;
-
-
-	@Column(name="QUANTITY", nullable= true)
-	private Integer quantity;
-
 	@Column(name="DATE_OF_PURCHASE")
 	private Date dateOfPurchase;
-
-
+	
 	@ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER) 
 	@JsonManagedReference
 	@JoinColumn(name = "MODE_PAY_ID")
 	private ModeOfPay modeOfPay;
 	
-	@Column(name="TAX_AMT",nullable=true)
-	private Double taxAmount;
+	@Column(name="TOTAL_TAX_AMT",nullable=true)
+	private Double totalTaxAmount;
 
 	@Column(name="CASHIER_NAME",nullable=true)
 	private String cashierName;
@@ -72,44 +64,13 @@ public class Invoice implements Serializable {
 		this.customerId = customerId;
 	}
 
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
+	
 	public Date getDateOfPurchase() {
 		return dateOfPurchase;
 	}
 
 	public void setDateOfPurchase(Date dateOfPurchase) {
 		this.dateOfPurchase = dateOfPurchase;
-	}
-
-	public ModeOfPay getPaymentMode() {
-		return modeOfPay;
-	}
-
-	public void setPaymentMode(ModeOfPay paymentMode) {
-		this.modeOfPay = paymentMode;
-	}
-
-	public Double getTaxAmount() {
-		return taxAmount;
-	}
-
-	public void setTaxAmount(Double taxAmount) {
-		this.taxAmount = taxAmount;
 	}
 
 	public String getCashierName() {
@@ -120,6 +81,22 @@ public class Invoice implements Serializable {
 		this.cashierName = cashierName;
 	}
 
+	public ModeOfPay getModeOfPay() {
+		return modeOfPay;
+	}
+
+	public void setModeOfPay(ModeOfPay modeOfPay) {
+		this.modeOfPay = modeOfPay;
+	}
+
+	public Double getTotalTaxAmount() {
+		return totalTaxAmount;
+	}
+
+	public void setTotalTaxAmount(Double totalTaxAmount) {
+		this.totalTaxAmount = totalTaxAmount;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -128,10 +105,8 @@ public class Invoice implements Serializable {
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((dateOfPurchase == null) ? 0 : dateOfPurchase.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
 		result = prime * result + ((modeOfPay == null) ? 0 : modeOfPay.hashCode());
-		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((taxAmount == null) ? 0 : taxAmount.hashCode());
+		result = prime * result + ((totalTaxAmount == null) ? 0 : totalTaxAmount.hashCode());
 		return result;
 	}
 
@@ -164,28 +139,27 @@ public class Invoice implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (itemId == null) {
-			if (other.itemId != null)
-				return false;
-		} else if (!itemId.equals(other.itemId))
-			return false;
 		if (modeOfPay == null) {
 			if (other.modeOfPay != null)
 				return false;
 		} else if (!modeOfPay.equals(other.modeOfPay))
 			return false;
-		if (quantity == null) {
-			if (other.quantity != null)
+		if (totalTaxAmount == null) {
+			if (other.totalTaxAmount != null)
 				return false;
-		} else if (!quantity.equals(other.quantity))
-			return false;
-		if (taxAmount == null) {
-			if (other.taxAmount != null)
-				return false;
-		} else if (!taxAmount.equals(other.taxAmount))
+		} else if (!totalTaxAmount.equals(other.totalTaxAmount))
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Invoice [id=" + id + ", customerId=" + customerId + ", dateOfPurchase=" + dateOfPurchase
+				+ ", modeOfPay=" + modeOfPay + ", totalTaxAmount=" + totalTaxAmount + ", cashierName=" + cashierName
+				+ "]";
+	}
+
+
 
 	
 	
