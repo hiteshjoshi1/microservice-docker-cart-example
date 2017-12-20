@@ -109,7 +109,21 @@ services:
        config:
          condition: service_healthy
        customer1:
-         condition: service_started  
+         condition: service_started 
+
+  zuul:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: zuul
+    ports:
+     - "1101:1101"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker /data/zuulEdgeGateway-0.0.1-SNAPSHOT
+    depends_on:
+       config:
+         condition: service_healthy         
          
 
 
