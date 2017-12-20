@@ -1,0 +1,76 @@
+spring:
+  profiles:
+    active: "dev"
+  application:
+    name: zuulgateway 
+encrypt:
+  failOnError: false
+    
+---    
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:5555
+      enabled: true 
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    config:
+      uri: http://config:5555
+      enabled: true 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#server:
+#  port: 5555
+
+#spring:
+#  application:
+#     name: zuul-proxy     
+#     
+#  
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:1111/eureka
+
+#to allow authentication headers to be passed to downsream microservices
+#zuul.sensitive-headers: Cookie,Set-Cookie,Authorization
+# will stop Authorization from happening       
+#zuul:
+#  sensitive-headers: Cookie,Set-Cookie
+#  
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000  
+#  
+
+
+ 

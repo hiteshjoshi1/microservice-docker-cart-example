@@ -7,17 +7,17 @@ Goals: -
 2. Spring Boot Cloud Config - deployed as docker container
 3. Spring Netflix Eureka Server - deployed as docker container
 4. Spring Eureka Client - deployed as docker container
-5. Spring Feign Client
-6. Spring Hysterix circuit breaker
-7. Spring Hysterix Dashboard
-8. Spring ZuulProxy
-9. Spring Turbine
+5. Spring Feign Client -added
+6. Spring Hysterix circuit breaker - support added
+7. Spring Hysterix Dashboard - deployed as a docker container
+8. Spring ZuulProxy- deployed as a docker container
+9. Spring Turbine - deployed as a docker container - works only in none docker envwith http push, it needs additional work as in docker it requires AMQP
 10. mysql - deployed as docker container and populated via script on start up
-11. Stretch Goal - Async API aggregator written in RxJava
-12. Stretch Goal - Jenkins
-13. Spring sleuth  And ELK
-14. Distributed caching
-
+11. Spring sleuth and Zipkin 
+12. ELK stack
+13. Distributed caching
+14. Stretch Goal - Async API aggregator written in RxJava
+15. Stretch Goal - Jenkins
 
 <div>
 I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory 
@@ -49,6 +49,15 @@ Working Endpoints so far :-
 <li>Endpoint with a Circuit breaker and fallback - http://localhost:2222/customers/1/orders</li>
 </ul>
 </div>
+
+Zuul Routes example - You can add Filters on the Zuul Proxy layer. This examples we have not added any.
+<div>
+<ul>
+<li>http://localhost:1101/customer-service/customers</li>
+<li>http://localhost:1101/invoice-service/invoice</li>
+<li>http://localhost:1101/inventory-service/inventory</li>
+<li> </li>
+
 
 Docker config - http://localhost:5555/customer-service/docker <br>
 Hystrix Monitor - We need to provide the application that needs to be montored. <br>
