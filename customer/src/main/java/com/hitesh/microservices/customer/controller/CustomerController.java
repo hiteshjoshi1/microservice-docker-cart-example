@@ -69,7 +69,7 @@ public class CustomerController {
 		CustomerOrders customerOrders= new CustomerOrders();
 		Customer customer = customerRepository.findOne(Long.parseLong(id));
 		customerOrders.setCustomer(customer);
-		logger.info("Calling feign client to get invoices");
+		logger.info("Calling feign client to get invoices"+id);
 		List<Invoice> invoiceList =  invoiceServiceClient.getInvoices(id);
 		customerOrders.setInvoiceList(invoiceList);
 		return customerOrders;

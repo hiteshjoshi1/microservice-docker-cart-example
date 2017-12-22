@@ -101,6 +101,7 @@ public class InventoryService {
 		return Arrays.asList(results.getBody());
 		
 	}
+	@SuppressWarnings("unused")
 	private List<InventoryCheckResultDTO> updateInventoryFallback(OrderDetail orderDetail) {
 		logger.warning("Fallback method for updating inventory called do something useful....");
 		return null;

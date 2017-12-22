@@ -6,7 +6,12 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
- 
+#  zipkin:
+#     locator:
+#      discovery:
+#        enabled: true
+#     service:
+#         name: inventory   
 eureka: 
    instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
