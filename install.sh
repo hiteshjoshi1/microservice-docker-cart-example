@@ -35,6 +35,10 @@ cd  ../zuulEdgeGateway
 echo 'Build edge gateway...'
 mvn clean package -DskipTests
 
+cd  ../zipkinTimer
+echo 'Build zipkin ui...'
+mvn clean package -DskipTests
+
 
 cd ../
 echo 'Copying .....'
@@ -45,5 +49,6 @@ cp inventory/target/inventory-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
 cp invoice/target/invoice-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
 cp monitor/target/monitor-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
 cp zuulEdgeGateway/target/zuulEdgeGateway-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
+cp zipkinTimer/target/zipkinTimer-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
 echo 'All engines up, ready to launch to hyperspace .....'
 sudo docker-compose up
