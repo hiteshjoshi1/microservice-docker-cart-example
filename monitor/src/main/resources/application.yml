@@ -23,7 +23,9 @@ eureka:
     
 spring:
   profiles:
-    active: "dev"    
+    active: "dev"
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}        
 ---
 spring:
   profiles: dev

@@ -6,6 +6,8 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}  
 
 eureka:
    instance:
@@ -23,7 +25,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
+      defaultZone: http://localhost:${discovery.port}/eureka/ # using eureka instead of localhost
 
 
     
@@ -35,6 +37,6 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:${invoice.discovery.port}/eureka/ # using eureka instead of localhost
+      defaultZone: http://eureka:${discovery.port}/eureka/ # using eureka instead of localhost
 
     
