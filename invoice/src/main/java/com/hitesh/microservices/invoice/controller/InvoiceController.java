@@ -1,6 +1,7 @@
 package com.hitesh.microservices.invoice.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,10 @@ import com.hitesh.microservices.invoice.repository.InvoiceRepository;
  */
 @RestController
 public class InvoiceController {
+	
+    protected Logger logger = Logger.getLogger(InvoiceController.class
+            .getName());
+	
 	@Autowired
 	InvoiceRepository invoiceRepository;
 
@@ -48,6 +53,7 @@ public class InvoiceController {
 	 */
 	@RequestMapping(value="/invoice/custid/{id}", method= RequestMethod.GET, produces = "application/json")
 	public List<Invoice> getInvoiceByCustomer(@PathVariable("id") String customerId){        
+		logger.info("Findin invoices for Id "+customerId);
 		return invoiceRepository.findByCustomerId(Long.parseLong(customerId));
 	}
 
