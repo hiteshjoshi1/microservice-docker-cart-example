@@ -9,7 +9,6 @@ endpoints:
 
 server:
   port: ${hystrix.port}
-  
 
 logging:
   level:
@@ -35,7 +34,7 @@ eureka:
       serviceUrl:
          defaultZone: http://localhost:${discovery.port}/eureka/ # using eureka instead of localhost
 
-turbine:
+turbine:   
   appConfig: customer-service,invoice-service
   aggregator:
     clusterConfig: CUSTOMER-SERVICE,INVOICE-SERVICE, INVENTORY-SERVICE

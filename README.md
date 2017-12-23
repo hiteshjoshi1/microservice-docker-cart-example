@@ -70,7 +70,7 @@ Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=
 
 
 for turbine based monitoring
-http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
+http://localhost:7777/turbine.stream?cluster=CUSTOMER-SERVICE
 
 -------------------------------------------------------------------------------------------------------------
 

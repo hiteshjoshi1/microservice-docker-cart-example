@@ -7,7 +7,7 @@ spring:
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
   rabbitmq:
-    host: ${RABBIT_HOST:localhost}  
+    addresses: localhost
 
 eureka:
    instance:
@@ -33,7 +33,7 @@ eureka:
 
 spring:
   profiles: docker
-   
+
 eureka:
   client:
     serviceUrl:

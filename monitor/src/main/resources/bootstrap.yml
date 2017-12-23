@@ -14,7 +14,6 @@ spring:
     config:
       uri: http://localhost:5555
       enabled: true 
-
 ---
 
 spring:
