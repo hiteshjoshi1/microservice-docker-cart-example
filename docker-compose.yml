@@ -16,10 +16,14 @@ services:
     
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
     restart: always
     ports:
       - "15672:15672"
       - "5672:5672"
+    networks:
+      - microservicesnet
     logging:
       options:
         max-size: "10m"
@@ -68,24 +72,8 @@ services:
          condition: service_started
        config:
          condition: service_healthy
-       invoice1:
-         condition: service_started  
-
-  inventory1:
-    image: hiteshjoshi1/microservice-docker-cart-example
-    container_name: inventory1
-    ports:
-     - "3333:3333"
-    networks:
-      - microservicesnet
-    volumes:
-      - /home/hitesh/jarloc:/data
-    command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
-    depends_on:
-       db:
-         condition: service_started
-       config:
-         condition: service_healthy
+       rabbitmq:  
+          condition: service_started
 
   invoice1:
     image: hiteshjoshi1/microservice-docker-cart-example
@@ -102,6 +90,27 @@ services:
          condition: service_started
        config:
          condition: service_healthy
+       rabbitmq:  
+          condition: service_started
+
+  inventory1:
+    image: hiteshjoshi1/microservice-docker-cart-example
+    container_name: inventory1
+    ports:
+     - "3333:3333"
+    networks:
+      - microservicesnet
+    volumes:
+      - /home/hitesh/jarloc:/data
+    command: -jar -Dspring.profiles.active=docker -Dspring.datasource.url=jdbc:mysql://docker-mysql/microservices_prod -Dspring.datasource.password=test /data/inventory-0.0.1-SNAPSHOT.jar
+    depends_on:
+       db:
+         condition: service_started
+       config:
+         condition: service_healthy
+       rabbitmq:  
+          condition: service_started
+
          
   monitor:
     image: hiteshjoshi1/microservice-docker-cart-example
@@ -118,9 +127,8 @@ services:
          condition: service_started
        config:
          condition: service_healthy
-       customer1:
-         condition: service_started
-       - rabbitmq          
+       rabbitmq:
+         condition: service_started            
 
   zuul:
     image: hiteshjoshi1/microservice-docker-cart-example
@@ -148,7 +156,8 @@ services:
     depends_on:
        config:
          condition: service_healthy              
-       - rabbitmq  
+       rabbitmq:  
+          condition: service_started
 
 
 networks:

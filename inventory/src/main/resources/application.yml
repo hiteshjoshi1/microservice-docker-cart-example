@@ -47,10 +47,11 @@ spring:
     hibernate:
       ddl-auto: none      
   rabbitmq:
-    host: http://rabbitmq
-    port: 5672
-    username: guest
-    password: guest
+   host: rabbitmq
+   port: 5672
+   username: guest
+   password: guest
+    
     
 eureka:
   client:
