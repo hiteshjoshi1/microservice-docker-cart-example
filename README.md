@@ -11,7 +11,7 @@ Goals: -
 6. Spring Hysterix circuit breaker - support added
 7. Spring Hysterix Dashboard - deployed as a docker container
 8. Spring ZuulProxy- deployed as a docker container
-9. Spring Turbine - deployed as a docker container - works only in none docker envwith http push, it needs additional work as in docker it requires AMQP
+9. Spring Turbine - deployed as a docker container 
 10. mysql - deployed as docker container and populated via script on start up
 11. Spring sleuth and Zipkin 
 12. ELK stack
@@ -25,8 +25,9 @@ from where they can be mounted to docker volumes.
 </div>
 
 <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
-So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. Finally run .install.sh.
-TODO - modify the install.sh so that it creates the working directory
+So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. Finally run
+<code> sudo .install.sh.</code>
+
 
 Under the hood this is what happens -
 1. Builds all microservices, eureka server, config
@@ -35,7 +36,11 @@ Under the hood this is what happens -
 4. Bring up config server
 5. Bring up Eureka Server
 6. Bring up microservices - Eureka clients. 
-7. Add them into one network so that they can communicate
+7. Enable Sleuth on microservices
+8. Configure microservices so that they send the trace to Spring AMQP
+9. Use Spring cloud Zipkin to read the trace from AMQP for timing information
+10. Use the trace from AMQP for monitoring in Turbine
+11. Add them into one network so that they can communicate
 
 Working Endpoints so far :-
 <div>
@@ -46,7 +51,13 @@ Working Endpoints so far :-
 <li>Invoice - http://localhost:4444/invoice</li>
 <li>Config - http://localhost:5555/customer-service/dev</li>
 <li>Hystrix Monitor - http://localhost:7777/hystrix</li>
-<li>Endpoint with a Circuit breaker and fallback - http://localhost:2222/customers/1/orders</li>
+<li>Zipkin UI - http://localhost:9411/zipkin/<li>
+<li>Example of an endpoint with a Circuit breaker and fallback(GET) - http://localhost:2222/customers/1/orders</li>
+<li>POST with Hytrix circuit breaker
+
+curl -H "Content-Type: application/json" -X POST -d '{"customerId":1,"modePayId":2,"cashierName":"Rambo","items":[{"itemId":1,"quantity":100,"unitCost":10}]}' http://localhost:2222/customers/order
+
+</li>
 </ul>
 </div>
 
@@ -59,18 +70,26 @@ Zuul Routes example - You can add Filters on the Zuul Proxy layer. This examples
 <li> </li>
 
 
-Docker config - http://localhost:5555/customer-service/docker <br>
+
 Hystrix Monitor - We need to provide the application that needs to be montored. <br>
-Please input - http://localhost:2222/hystrix.stream<br>
-If you are in docker - input http://172.20.0.7:2222/hystrix.stream <br>
-
-
-
+Please input in local - http://localhost:2222/hystrix.stream<br>
+If you are using docker - input http://172.20.0.7:2222/hystrix.stream <br>
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
 
-for turbine based monitoring
-http://localhost:7777/turbine.stream?cluster=CUSTOMER-SERVICE
+For turbine based monitoring - <BR>
+http://localhost:7777/turbine.stream?cluster=CUSTOMER-SERVICE <br>
+In docker->
+http://monitor:7777/turbine.stream?cluster=CUSTOMER-SERVICE <br>
+
+
+Note-
+
+Spring cloud turbine and Spring cloud zipkin can work over http. But this configuration does not work in a cloud deployement/docker.
+For it to work you need to use a messaging service such as kafka or Rabbit AMQP.
+
+I have done installation of Erlang and RabbitMq in my local(windows) and spring connects to it without a hitch.
+However in order to run it in a docker based enviornment, you have to explicitly provide connection properties in the application properties.
 
 -------------------------------------------------------------------------------------------------------------
 
