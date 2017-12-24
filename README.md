@@ -13,11 +13,13 @@ Goals: -
 8. Spring ZuulProxy- deployed as a docker container
 9. Spring Turbine - deployed as a docker container 
 10. mysql - deployed as docker container and populated via script on start up
-11. Spring sleuth and Zipkin 
+11. Spring sleuth and Zipkin - deployed as a docker container
+Stretch Goals --
 12. ELK stack
 13. Distributed caching
-14. Stretch Goal - Async API aggregator written in RxJava
-15. Stretch Goal - Jenkins
+14. Async API aggregator written in RxJava
+15. Jenkins
+16. Angular 4 based UI to got with the microservices
 
 <div>
 I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory 
@@ -41,6 +43,7 @@ Under the hood this is what happens -
 9. Use Spring cloud Zipkin to read the trace from AMQP for timing information
 10. Use the trace from AMQP for monitoring in Turbine
 11. Add them into one network so that they can communicate
+12. Ohh, btw, the Config are externalized using Spring cloud config and are situated at https://github.com/hiteshjoshi1/microservice-docker-cart-config.git
 
 Working Endpoints so far :-
 <div>
