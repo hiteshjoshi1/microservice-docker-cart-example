@@ -75,7 +75,7 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
-		<!-- zipkin and sleuth -->
+		<!-- zipkin and sleuth for amqp, for direct use of hhtp with zipkin use different zipkin dependency -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>

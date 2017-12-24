@@ -6,14 +6,11 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
-  zipkin:
-    locator:
-      discovery:
-        enabled: true
-        
+    
   sleuth:
     sampler:
-      percentage: 1.0  
+      percentage: 1.0 
+ 
 
 server:
   port: ${customer.port} 
@@ -54,8 +51,12 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/microservices_cust
     username: root
-    password: test    
-  
+    password: test  
+  rabbitmq:
+   host: rabbitmq
+   port: 5672
+   username: guest
+   password: guest
     
 eureka:
   client:

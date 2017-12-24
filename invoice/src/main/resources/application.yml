@@ -31,7 +31,8 @@ spring:
     password: test 
   jpa:
     hibernate:
-      ddl-auto: none    
+      ddl-auto: none  
+  
 eureka:
   client:
     serviceUrl:
@@ -49,7 +50,12 @@ spring:
     password: test 
   jpa:
     hibernate:
-      ddl-auto: none        
+      ddl-auto: none     
+  rabbitmq:
+   host: http://rabbitmq
+   port: 5672
+   username: guest
+   password: guest	
     
 eureka:
   client:

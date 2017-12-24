@@ -42,6 +42,11 @@ turbine:
 ---
 spring:
   profiles: docker  
+  rabbitmq:
+   host: rabbitmq
+   port: 5672
+   username: guest
+   password: guest
 
 eureka:
   client:

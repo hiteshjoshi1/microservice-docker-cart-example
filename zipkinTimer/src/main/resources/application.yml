@@ -6,9 +6,10 @@ spring:
     banner-mode: "off"  
   freemarker:
     enabled: false           # Ignore Eureka dashboard FreeMarker templates
-  rabbitmq:
-    addresses: localhost
 
+  sleuth:
+    enabled: false
+     
 eureka:
    instance:
        leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
@@ -33,6 +34,20 @@ eureka:
 
 spring:
   profiles: docker
+  rabbitmq:
+   host: rabbitmq
+   port: 5672
+   username: guest
+   password: guest
+  jpa:
+    hibernate:
+      ddl-auto: none  
+ # datasource:
+ #   url: jdbc:mysql://docker-mysql/zipkin
+ #   username: root
+ #   password: test
+ #   initialize: true
+ #   continueOnError: true     
 
 eureka:
   client:
