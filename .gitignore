@@ -4,5 +4,5 @@ customer/.settings
 .project
 inventory/.settings
 inventory/.mvn
-
+.settings
 .springBeans
