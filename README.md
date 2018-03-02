@@ -68,15 +68,17 @@ and so on...
 Zuul Routes  - You can add Filters on the Zuul Proxy layer. This examples we have not added any.
 
 
-### Hystrix Monitor details -
+### Hystrix Monitor details :-
 Hystrix Monitor - We need to provide the application that needs to be montored. 
-Please input - http://localhost:2222/hystrix.stream
-If you are in docker - input http://172.20.0.7:2222/hystrix.stream 
+Please input - 
+- http://localhost:2222/hystrix.stream
+If you are in docker, input - 
+- http://172.20.0.7:2222/hystrix.stream 
 
 
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
-### Turbine -
+### Turbine :-
 
 For turbine based monitoring
 http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
@@ -86,7 +88,7 @@ http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
 
 http://localhost:1101/swagger-ui.html#/
 
-### Individual Swagger URL of microservices- 
+### Individual Swagger URL of microservices :- 
 - http://localhost:3333/swagger-ui.html#/
 - http://localhost:4444/swagger-ui.html#/
 - http://localhost:5555/swagger-ui.html#/
@@ -198,13 +200,4 @@ To Run the  Custom Image, notice the linkage to the mysql container for microser
 <li><b><code>docker run --name docker-inventory --link docker-mysql:mysql -P -d microservice/inventory</code></b>
 <li><b><code>docker run --name docker-invoice --link docker-mysql:mysql -P -d microservice/invoice</code></b>
 </ul>
-
-
-
-
-__________________________________________________________________________________________________________________________________
-
-
-
-
 
