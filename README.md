@@ -69,7 +69,7 @@ If you are in docker - input http://172.20.0.7:2222/hystrix.stream <br>
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
 
-for turbine based monitoring
+For turbine based monitoring
 http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
 
 -------------------------------------------------------------------------------------------------------------
@@ -150,9 +150,6 @@ To Run the  Custom Image, notice the linkage to the mysql container for microser
 <li><b><code>docker run --name docker-inventory --link docker-mysql:mysql -P -d microservice/inventory</code></b>
 <li><b><code>docker run --name docker-invoice --link docker-mysql:mysql -P -d microservice/invoice</code></b>
 </ul>
-
-
-In this example, all my microservices connect to the same DB, but this can be easily changed above.
 
 
 __________________________________________________________________________________________________________________________________
