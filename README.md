@@ -19,6 +19,8 @@ Goals: -
 14. Stretch Goal - Async API aggregator written in RxJava
 15. Stretch Goal - Jenkins
 
+In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service.
+
 <div>
 I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory 
 from where they can be mounted to docker volumes.
@@ -64,6 +66,10 @@ Hystrix Monitor - We need to provide the application that needs to be montored. 
 Please input - http://localhost:2222/hystrix.stream<br>
 If you are in docker - input http://172.20.0.7:2222/hystrix.stream <br>
 
+
+Swagger Routes from Edge gateway
+
+http://localhost:1101/swagger-ui.html#/
 
 
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
@@ -152,6 +158,20 @@ To Run the  Custom Image, notice the linkage to the mysql container for microser
 </ul>
 
 
+Checking Cloud config
+
+http://localhost:5555/customer-service/dev
+http://localhost:5555/discovery-service/dev
+http://localhost:5555/invoice-service/dev
+http://localhost:5555/inventory-service/dev
+http://localhost:5555/zuulgateway/dev
+
+To see corresponding docker profiles
+http://localhost:5555/inventory-service/docker
+
+For the config server to be able to fetch property from github , setup SSH access to your github account.
+My property files are in
+https://github.com/hiteshjoshi1/microservice-docker-cart-config
 __________________________________________________________________________________________________________________________________
 
 <b>References and Citations - </b> <br>

@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config
+          uri: git@github.com:hiteshjoshi1/microservice-docker-cart-config.git
         health:
           repositories:
              customer-service:
