@@ -35,7 +35,7 @@ What I intend to do -
 - I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory from where they can be mounted to docker volumes.
 - <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
 
-- Under the hood this is what happens -
+ Under the hood this is what happens -
 1. Builds all microservices, eureka server, config
 2. Brings up mysql
 3. Populate mysql with DDL and DML if not done already
@@ -87,19 +87,20 @@ http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
 http://localhost:1101/swagger-ui.html#/
 
 ### Individual Swagger URL of microservices- 
-http://localhost:3333/swagger-ui.html#/
-http://localhost:4444/swagger-ui.html#/
-http://localhost:5555/swagger-ui.html#/
+- http://localhost:3333/swagger-ui.html#/
+- http://localhost:4444/swagger-ui.html#/
+- http://localhost:5555/swagger-ui.html#/
 
 
 
 ### Checking Cloud config :-
 Checking the cloud config coming from the config server deployed on the port 5555.
-http://localhost:5555/customer-service/dev
-http://localhost:5555/discovery-service/dev
-http://localhost:5555/invoice-service/dev
-http://localhost:5555/inventory-service/dev
-http://localhost:5555/zuulgateway/dev
+
+- http://localhost:5555/customer-service/dev
+- http://localhost:5555/discovery-service/dev
+- http://localhost:5555/invoice-service/dev
+- http://localhost:5555/inventory-service/dev
+- http://localhost:5555/zuulgateway/dev
 
 The project uses the config defined here
 ```
@@ -110,16 +111,14 @@ https://github.com/hiteshjoshi1/microservice-docker-cart-config
 **NOTE  If you want to use the same config, clone this repo and then change the gut URL to your cloned repo in the config/ resources For the config server to be able to fetch property from github , setup SSH access to your github account.
 
 To see corresponding docker profiles, change the profile at the end as - 
-http://localhost:5555/inventory-service/docker
+- http://localhost:5555/inventory-service/docker
 
 
-## References and Citations - 
+## References and Citations :- 
 - https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/ 
 - https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii 
 - https://github.com/kbastani/spring-cloud-microservice-example
 - https://github.com/sqshq/PiggyMetrics
-
-
 
 -------------------------------------------------------------------------------------------------------------
 
