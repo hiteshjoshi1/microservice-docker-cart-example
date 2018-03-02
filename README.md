@@ -1,82 +1,125 @@
-Project for a Dockerized Microservics
+# Microservics Architecture
 
-I am going to use Spring Netflix OSS to build microservices API for a very basic Shopping cart application
+###  written by Hitesh Joshi - sendmailtojoshi@gmail.com
 
-Goals: -
-1. Docker for deployment
-2. Spring Boot Cloud Config - deployed as docker container
-3. Spring Netflix Eureka Server - deployed as docker container
-4. Spring Eureka Client - deployed as docker container
-5. Spring Feign Client -added
-6. Spring Hysterix circuit breaker - support added
-7. Spring Hysterix Dashboard - deployed as a docker container
-8. Spring ZuulProxy- deployed as a docker container
-9. Spring Turbine - deployed as a docker container - works only in none docker envwith http push, it needs additional work as in docker it requires AMQP
-10. mysql - deployed as docker container and populated via script on start up
-11. Spring sleuth and Zipkin 
-12. ELK stack
-13. Distributed caching
-14. Stretch Goal - Async API aggregator written in RxJava
-15. Stretch Goal - Jenkins
 
-In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service.
+This is proof of concept application where we are trying to build a very basic Shopping cart using microservices, the main intent is to setup microservices properly.
 
-<div>
-I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory 
-from where they can be mounted to docker volumes.
-</div>
+What we have achieved so far
 
-<b>install.sh</b> will also take care of bringing all containers using docker-compose. 
-So clone the project, create a volume directory in your system and modify the install.sh and docker-compose.yml accordingly. Finally run .install.sh.
-TODO - modify the install.sh so that it creates the working directory
+1. Broken the monolith into smaller microservices.
+2. Externalized config to a seprate git repository.
+3. Enabled Service Discovery using Netflix Eureka
+4. Enabled Circuit breaking in between services using Netflix Hysterix
+5. Enabled Circuit monitoring using Hystrix and Turbine dashboards
+6. Enabled distributed performance monitoring using Spring Sleuth and Zipkin
+7. Enabled Edge server using Netflix Zuul
+8. Enabled feign clients.
+9. Enabled API documentation for individual microservices and through the Edge proxy
+10. Used MySql as the database
+11. All components can be deployed as docker containers with the attached docker compose file which pre populates the db on startup.
 
-Under the hood this is what happens -
+What I intend to do - 
+
+1. Securing the Microservices with OAuth 2 / Spring security.
+2. Angular based UI at the edge server
+3. Distributed Log analysis with Elastic Search, logstash and Kibana
+4. Distributed Caching with Memacache/Hazelcast.
+5. CI/CD pipeline
+6. Find a cheap hosting platform and deploy this on cloud :)
+
+
+
+### Notes -
+- In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service.
+- I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory from where they can be mounted to docker volumes.
+- <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
+
+- Under the hood this is what happens -
 1. Builds all microservices, eureka server, config
-2. Bring up mysql
+2. Brings up mysql
 3. Populate mysql with DDL and DML if not done already
 4. Bring up config server
 5. Bring up Eureka Server
 6. Bring up microservices - Eureka clients. 
-7. Add them into one network so that they can communicate
+7. Brings up the Zuul Edge gateway.
+8. Add them into one network so that they can communicate
 
-Working Endpoints so far :-
-<div>
-<ul>
-<li>Eureka - http://localhost:1111/eureka</li>
-<li>Customer - localhost:localhost:2222/customer </li>
-<li>Inventory - http://localhost:3333/inventory </li>
-<li>Invoice - http://localhost:4444/invoice</li>
-<li>Config - http://localhost:5555/customer-service/dev</li>
-<li>Hystrix Monitor - http://localhost:7777/hystrix</li>
-<li>Endpoint with a Circuit breaker and fallback - http://localhost:2222/customers/1/orders</li>
-</ul>
-</div>
+### Endpoints :-
 
-Zuul Routes example - You can add Filters on the Zuul Proxy layer. This examples we have not added any.
-<div>
-<ul>
-<li>http://localhost:1101/customer-service/customers</li>
-<li>http://localhost:1101/invoice-service/invoice</li>
-<li>http://localhost:1101/inventory-service/inventory</li>
-<li> </li>
+Direct web service endpoints
+- Eureka - http://localhost:1111/eureka
+- Customer - localhost:localhost:2222/customer 
+- Inventory - http://localhost:3333/inventory
+- Invoice - http://localhost:4444/invoice
+- Config - http://localhost:5555/customer-service/dev
+- Hystrix Monitor - http://localhost:7777/hystrix
+- Endpoint with a Circuit breaker and Hystrix fallback - http://localhost:2222/customers/1/orders
 
 
-Docker config - http://localhost:5555/customer-service/docker <br>
-Hystrix Monitor - We need to provide the application that needs to be montored. <br>
-Please input - http://localhost:2222/hystrix.stream<br>
-If you are in docker - input http://172.20.0.7:2222/hystrix.stream <br>
+
+### URL's through edge proxy :-
+- http://localhost:1101/customer-service/customers
+- http://localhost:1101/invoice-service/invoice 
+- http://localhost:1101/inventory-service/inventory
+
+and so on...
+
+Zuul Routes  - You can add Filters on the Zuul Proxy layer. This examples we have not added any.
 
 
-Swagger Routes from Edge gateway
-
-http://localhost:1101/swagger-ui.html#/
+### Hystrix Monitor details -
+Hystrix Monitor - We need to provide the application that needs to be montored. 
+Please input - http://localhost:2222/hystrix.stream
+If you are in docker - input http://172.20.0.7:2222/hystrix.stream 
 
 
 Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
+### Turbine -
 
 For turbine based monitoring
 http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
+
+
+### Swagger URL from Zuul Edge gatway :-
+
+http://localhost:1101/swagger-ui.html#/
+
+### Individual Swagger URL of microservices- 
+http://localhost:3333/swagger-ui.html#/
+http://localhost:4444/swagger-ui.html#/
+http://localhost:5555/swagger-ui.html#/
+
+
+
+### Checking Cloud config :-
+Checking the cloud config coming from the config server deployed on the port 5555.
+http://localhost:5555/customer-service/dev
+http://localhost:5555/discovery-service/dev
+http://localhost:5555/invoice-service/dev
+http://localhost:5555/inventory-service/dev
+http://localhost:5555/zuulgateway/dev
+
+The project uses the config defined here
+```
+https://github.com/hiteshjoshi1/microservice-docker-cart-config
+
+```
+
+**NOTE  If you want to use the same config, clone this repo and then change the gut URL to your cloned repo in the config/ resources For the config server to be able to fetch property from github , setup SSH access to your github account.
+
+To see corresponding docker profiles, change the profile at the end as - 
+http://localhost:5555/inventory-service/docker
+
+
+## References and Citations - 
+- https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/ 
+- https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii 
+- https://github.com/kbastani/spring-cloud-microservice-example
+- https://github.com/sqshq/PiggyMetrics
+
+
 
 -------------------------------------------------------------------------------------------------------------
 
@@ -158,27 +201,10 @@ To Run the  Custom Image, notice the linkage to the mysql container for microser
 </ul>
 
 
-Checking Cloud config
 
-http://localhost:5555/customer-service/dev
-http://localhost:5555/discovery-service/dev
-http://localhost:5555/invoice-service/dev
-http://localhost:5555/inventory-service/dev
-http://localhost:5555/zuulgateway/dev
 
-To see corresponding docker profiles
-http://localhost:5555/inventory-service/docker
-
-For the config server to be able to fetch property from github , setup SSH access to your github account.
-My property files are in
-https://github.com/hiteshjoshi1/microservice-docker-cart-config
 __________________________________________________________________________________________________________________________________
 
-<b>References and Citations - </b> <br>
-https://alexandreesl.com/2016/01/08/docker-using-containers-to-implement-a-microservices-architecture/ <br>
-https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii <br>
-https://github.com/kbastani/spring-cloud-microservice-example</br>
-https://github.com/sqshq/PiggyMetrics</br>
 
 
 
