@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+  <parent>
+    <groupId>com.hitesh.microservices</groupId>
+    <artifactId>microservices</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>cartui</artifactId>
+  <name>UI for microservices</name>
+  <description>Deployed with edge gateway</description>
+  <packaging>jar</packaging>
+  
+    <properties>
+    <main.basedir>${project.parent.basedir}</main.basedir>
+    <maven-release-plugin.version>2.4.2</maven-release-plugin.version>
+    <backendPortNbr>Set via command line argument</backendPortNbr>
+    <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+    <node.version>v8.9.0</node.version>
+    <npm.version>5.5.1</npm.version>
+    
+    </properties>
+    
+    <profiles>
+		<profile>
+			<id>BUILD</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<targetPath>META-INF/resources</targetPath>
+						<directory>${basedir}/dist</directory>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${frontend-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>Installing node.js and npm locally</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+
+								<configuration>
+									<nodeVersion>${node.version}</nodeVersion>
+									<npmVersion>${npm.version}</npmVersion>
+									<workingDirectory>${basedir}</workingDirectory>
+									<installDirectory>${basedir}</installDirectory>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>Cleaning up unused npm modules</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>prune</arguments>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>Grabbing npm modules</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>Running build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build</arguments>
+								</configuration>
+							</execution>
+
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>LINT</id>
+			<build>
+				<resources>
+					<resource>
+						<targetPath>META-INF/resources</targetPath>
+						<directory>${basedir}/dist</directory>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${frontend-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>Running linter</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run lint</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>FUNCTIONAL_TESTS</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${frontend-maven-plugin.version}</version>
+						<executions>
+							<!--<execution> -->
+							<!--<id>Running unit tests</id> -->
+							<!--<goals> -->
+							<!--<goal>npm</goal> -->
+							<!--</goals> -->
+							<!--<configuration> -->
+							<!--<arguments>run test.ci</arguments> -->
+							<!--</configuration> -->
+							<!--</execution> -->
+							<execution>
+								<id>Running integration tests</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run e2e -- --params.SERVICE_PORT=${backendPortNbr} </arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>UNIT_TESTS</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${frontend-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>Running unit tests</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run test</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+    
+    
+    
+  
+  <!-- <build>
+     <resources>
+      <resource>
+        <directory>ui-src</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <nodeVersion>v8.9.0</nodeVersion>
+          <npmVersion>5.5.1</npmVersion>
+        </configuration>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>build</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm test</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <arguments>test</arguments>
+              <failOnError>true</failOnError>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  
+</project> -->

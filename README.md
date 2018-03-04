@@ -70,15 +70,16 @@ Zuul Routes  - You can add Filters on the Zuul Proxy layer. This examples we hav
 
 ### Hystrix Monitor details :-
 Hystrix Monitor - We need to provide the application that needs to be montored. 
-Please input - 
+Please input in Hystrix Dashboard - 
 - http://localhost:2222/hystrix.stream
+
 If you are in docker, input - 
 - http://172.20.0.7:2222/hystrix.stream 
 
+And so on for other microservices...
 
-Final URL should looks like this - http://localhost:7777/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A2222%2Fhystrix.stream&title=Customer-Hystrix
 
-### Turbine :-
+### Turbine Dashboard :-
 
 For turbine based monitoring
 http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
@@ -121,6 +122,7 @@ To see corresponding docker profiles, change the profile at the end as -
 - https://www.3pillarglobal.com/insights/building-a-microservice-architecture-with-spring-boot-and-docker-part-iii 
 - https://github.com/kbastani/spring-cloud-microservice-example
 - https://github.com/sqshq/PiggyMetrics
+- https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
 
 -------------------------------------------------------------------------------------------------------------
 
