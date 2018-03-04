@@ -18,15 +18,16 @@ What we have achieved so far
 9. Enabled API documentation for individual microservices and through the Edge proxy
 10. Used MySql as the database
 11. All components can be deployed as docker containers with the attached docker compose file which pre populates the db on startup.
+12. Angular SPA deployed on Edge gateway 
+	- http://localhost:1101/
 
 What I intend to do - 
 
 1. Securing the Microservices with OAuth 2 / Spring security.
-2. Angular based UI at the edge server
-3. Distributed Log analysis with Elastic Search, logstash and Kibana
-4. Distributed Caching with Memacache/Hazelcast.
-5. CI/CD pipeline
-6. Find a cheap hosting platform and deploy this on cloud :)
+2. Distributed Log analysis with Elastic Search, logstash and Kibana
+3. Distributed Caching with Memacache/Hazelcast.
+4. CI/CD pipeline
+5. Find a cheap hosting platform and deploy this on cloud :)
 
 
 
@@ -43,7 +44,8 @@ What I intend to do -
 5. Bring up Eureka Server
 6. Bring up microservices - Eureka clients. 
 7. Brings up the Zuul Edge gateway.
-8. Add them into one network so that they can communicate
+8. Angular SPA - cart UI is bundled with Edge gateway and deployed
+9. Add all of the above components into one network so that they can communicate
 
 ### Endpoints :-
 
