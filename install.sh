@@ -51,4 +51,4 @@ cp monitor/target/monitor-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
 cp zuulEdgeGateway/target/zuulEdgeGateway-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
 cp zipkinTimer/target/zipkinTimer-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
 echo 'All engines up, ready to launch to hyperspace .....'
-sudo docker-compose up
+docker-compose up
