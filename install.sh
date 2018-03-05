@@ -1,46 +1,46 @@
 #!/bin/bash
-#sudo docker rm eureka
-#sudo docker rm config
-#sudo docker rm customer1
 echo 'Creating Volume Mount for Docker...'
-mkdir -p /home/hitesh/jarloc
-cd  servicediscovery
-echo 'Build discovery...'
+mkdir -p /home/${USER}/jarloc
+
+echo 'Building the entire project ...'
 mvn clean package -DskipTests
 
-cd ../config
-echo 'Build config...'
-mvn clean package -DskipTests
+# cd  servicediscovery
+# echo 'Build discovery...'
+# mvn clean package -DskipTests
 
-cd  ../customer
+# cd ../config
+# echo 'Build config...'
+# mvn clean package -DskipTests
 
-echo 'Build customer...'
-mvn clean package -DskipTests
+# cd  ../customer
 
-
-cd  ../inventory
-echo 'Build inventory...'
-mvn clean package -DskipTests
-
-cd  ../invoice
-echo 'Build invoice...'
-mvn clean package -DskipTests
+# echo 'Build customer...'
+# mvn clean package -DskipTests
 
 
-cd  ../monitor
-echo 'Build monitor...'
-mvn clean package -DskipTests
+# cd  ../inventory
+# echo 'Build inventory...'
+# mvn clean package -DskipTests
 
-cd  ../zuulEdgeGateway
-echo 'Build edge gateway...'
-mvn clean package -DskipTests
-
-cd  ../zipkinTimer
-echo 'Build zipkin ui...'
-mvn clean package -DskipTests
+# cd  ../invoice
+# echo 'Build invoice...'
+# mvn clean package -DskipTests
 
 
-cd ../
+# cd  ../monitor
+# echo 'Build monitor...'
+# mvn clean package -DskipTests
+
+# cd  ../zuulEdgeGateway
+# echo 'Build edge gateway...'
+# mvn clean package -DskipTests
+
+# cd  ../zipkinTimer
+# echo 'Build zipkin ui...'
+# mvn clean package -DskipTests
+# cd ../
+
 echo 'Copying .....'
 cp servicediscovery/target/servicediscovery-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
 cp config/target/config-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
