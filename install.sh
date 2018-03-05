@@ -42,13 +42,13 @@ mvn clean package -DskipTests
 # cd ../
 
 echo 'Copying .....'
-cp servicediscovery/target/servicediscovery-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp config/target/config-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp customer/target/customer-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp inventory/target/inventory-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp invoice/target/invoice-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp monitor/target/monitor-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp zuulEdgeGateway/target/zuulEdgeGateway-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
-cp zipkinTimer/target/zipkinTimer-0.0.1-SNAPSHOT.jar /home/hitesh/jarloc
+cp servicediscovery/target/servicediscovery-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp config/target/config-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp customer/target/customer-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp inventory/target/inventory-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp invoice/target/invoice-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp monitor/target/monitor-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp zuulEdgeGateway/target/zuulEdgeGateway-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
+cp zipkinTimer/target/zipkinTimer-0.0.1-SNAPSHOT.jar /home/${USER}/jarloc
 echo 'All engines up, ready to launch to hyperspace .....'
 sudo docker-compose up
