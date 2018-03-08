@@ -8,9 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config.git
-          username: hiteshjoshi1
-          password: test
+          uri: file:/data/microservice-docker-cart-config
         health:
           repositories:
              customer-service:

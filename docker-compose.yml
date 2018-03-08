@@ -24,7 +24,13 @@ services:
       - microservicesnet
     volumes:
       - /home/hitesh/jarloc:/data
-    command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar 
+    command: -jar -Dspring.profiles.active=docker /data/servicediscovery-0.0.1-SNAPSHOT.jar
+    healthcheck:
+      test: curl --fail -s http://localhost:1111/info || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3 
+  
 
   config:
     image: hiteshjoshi1/microservice-docker-cart-example
@@ -37,11 +43,15 @@ services:
     volumes:
       - /home/hitesh/jarloc:/data
     command: -jar -Dspring.profiles.active=docker /data/config-0.0.1-SNAPSHOT.jar
+    depends_on:
+       eureka:
+         condition: service_healthy 
     healthcheck:
       test: curl --fail -s http://localhost:5555/info || exit 1
       interval: 1m30s
       timeout: 10s
       retries: 3 
+
 
   customer1:
     image: hiteshjoshi1/microservice-docker-cart-example
