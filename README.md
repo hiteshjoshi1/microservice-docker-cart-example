@@ -23,18 +23,31 @@ What we have achieved so far
 
 What I intend to do - 
 
-1. Securing the Microservices with OAuth 2 / Spring security.
-2. Distributed Log analysis with Elastic Search, logstash and Kibana
-3. Distributed Caching with Memacache/Hazelcast.
-4. CI/CD pipeline
-5. Find a cheap hosting platform and deploy this on cloud :)
+1. TODO add code to Angular SPA
+2. Securing the Microservices with OAuth 2 / Spring security.
+3. Distributed Log analysis with Elastic Search, logstash and Kibana
+4. Distributed Caching with Memacache/Hazelcast.
+5. CI/CD pipeline
+6. Find a cheap hosting platform and deploy this on cloud :)
 
 
 
 ### Notes -
-- In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service.
+- If you are building it without docker, configuration is picked up from github -
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:hiteshjoshi1/microservice-docker-cart-config.git
+          
+- If you are building it in docker, this configuration is downloaded and then used. For some reason i was not able to connect config project with  github from docker even after setting up ssh.    
+      
+- In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service. With docker , docker will bring them up.
+
 - I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory from where they can be mounted to docker volumes.
 - <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
+
+All you need is docker , docker-compose, java and maven in the host machine.
 
  Under the hood this is what happens -
 1. Builds all microservices, eureka server, config
@@ -96,6 +109,20 @@ http://localhost:1101/swagger-ui.html#/
 - http://localhost:4444/swagger-ui.html#/
 - http://localhost:5555/swagger-ui.html#/
 
+### Micro Service URL
+GET - http://localhost:2222/customers
+POST - http://localhost:2222/customers/new/
+GET - http://localhost:2222/customers/{custID}/orders
+POST (Create an Order for a customer) - http://localhost:2222/customers/order 
+
+
+
+| Micro service URL | Service URL through edge proxy |
+| --- | --- |
+| http://localhost:2222/customers | http://localhost:1101/customer-service/customers |
+| http://localhost:2222/customers/{custID}/order | http://localhost:1101/customer-service/customers/{custID}/order |
+|http://loclahost:4444/invoice|http://localhost:1101/invoice-service/invoice |
+
 
 
 ### Checking Cloud config :-
@@ -113,7 +140,11 @@ https://github.com/hiteshjoshi1/microservice-docker-cart-config
 
 ```
 
-**NOTE  If you want to use the same config, clone this repo and then change the gut URL to your cloned repo in the config/ resources For the config server to be able to fetch property from github , setup SSH access to your github account.
+
+
+
+### NOTE 
+If you want to use the same config, clone this repo and then change the gut URL to your cloned repo in the config/ resources For the config server to be able to fetch property from github , setup SSH access to your github account.
 
 To see corresponding docker profiles, change the profile at the end as - 
 - http://localhost:5555/inventory-service/docker
