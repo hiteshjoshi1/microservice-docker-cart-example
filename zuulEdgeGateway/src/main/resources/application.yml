@@ -10,8 +10,25 @@ spring:
 server:
   port: ${zuul.port} 
 
+  
 zuul:
-  sensitive-headers: Cookie,Set-Cookie  
+  sensitive-headers: Cookie,Set-Cookie 
+
+documentation: 
+  swagger: 
+    services:   
+      - 
+        name: inventory-service
+        url: ${documentation.baseurl}:${zuul.port}/inventory-service/v2/api-docs
+        version: 2.0
+      - 
+        name: customer-service
+        url: ${documentation.baseurl}:${zuul.port}/customer-service/v2/api-docs
+        version: 2.0
+      - 
+        name: invoice-service
+        url: ${documentation.baseurl}:${zuul.port}/invoice-service/v2/api-docs
+        version: 2.0      
 
 ---
 
@@ -25,7 +42,9 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
     preferIpAddress: true
- 
+
+documentation: 
+  baseurl: http://localhost
     
 ---
 
@@ -39,3 +58,6 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5   # DO NOT DO THIS IN PRODUCTION
     preferIpAddress: true
+documentation: 
+  baseurl: http://ZUULGATEWAY
+    

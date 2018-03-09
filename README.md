@@ -3,9 +3,9 @@
 ###  written by Hitesh Joshi - sendmailtojoshi@gmail.com
 
 
-This is proof of concept application where we are trying to build a very basic Shopping cart using microservices, the main intent is to setup microservices properly.
+This is proof of concept application where I am trying to build a very basic Shopping cart using microservices, the main intent is to setup microservices properly.
 
-What we have achieved so far
+What is achieved so far -
 
 1. Broken the monolith into smaller microservices.
 2. Externalized config to a seprate git repository.
@@ -42,7 +42,7 @@ What I intend to do -
           
 - If you are building it in docker, this configuration is downloaded and then used. For some reason i was not able to connect config project with  github from docker even after setting up ssh.    
       
-- In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service. With docker , docker will bring them up.
+- In order to run these locally without docker, you need to have a Rabbit MQ and Sql Server started and running as a service. With docker , docker will bring them up. RabbitMQ is needed for zipkin  server so that logs are sent by your application to Zipkin. You can replace this RabbitMQ with Kafka.
 
 - I have written <b>install.sh</b> which does the job of CI of building and packaging the Spring boot application and put them in a directory from where they can be mounted to docker volumes.
 - <b>install.sh</b> will also take care of bringing all containers using docker-compose. 
@@ -82,7 +82,7 @@ and so on...
 
 Zuul Routes  - You can add Filters on the Zuul Proxy layer. This examples we have not added any.
 
-
+Monitor project-
 ### Hystrix Monitor details :-
 Hystrix Monitor - We need to provide the application that needs to be montored. 
 Please input in Hystrix Dashboard - 
@@ -93,11 +93,13 @@ If you are in docker, input -
 
 And so on for other microservices...
 
-
 ### Turbine Dashboard :-
 
 For turbine based monitoring
 http://172.20.0.7:7777/turbine.stream?cluster=CUSTOMER-SERVICE
+
+### Zipkin Project 
+http://localhost:3301/zipkin/
 
 
 ### Swagger URL from Zuul Edge gatway :-
