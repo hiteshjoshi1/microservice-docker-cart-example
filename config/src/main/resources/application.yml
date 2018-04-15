@@ -4,7 +4,17 @@ server:
 spring:
   profiles:
     active: "dev"
-
+  cloud:
+   config:
+     server:
+        git:
+          uri: https://github.com/hiteshjoshi1/microservice-docker-cart-config.git
+        health:
+          repositories:
+             customer-service:
+              label: master
+             discovery-service:
+               label: master 
 
     
   main:
@@ -13,17 +23,7 @@ spring:
 ---
 spring:
   profiles: dev
-  cloud:
-    config:
-      server:
-        git:
-          uri: git@github.com:hiteshjoshi1/microservice-docker-cart-config.git
-        health:
-          repositories:
-             customer-service:
-              label: master
-             discovery-service:
-               label: master
+  
 
 eureka:
   instance:
@@ -43,17 +43,7 @@ management:
  # had some issue accessing git through SSH from my linux VM
 spring:
   profiles: docker
-  cloud:
-    config:
-      server:
-        git:
-          uri: file:/data/microservice-docker-cart-config
-        health:
-          repositories:
-             customer-service:
-              label: master
-             discovery-service:
-               label: master
+ 
 eureka:
   instance:
     hostname: configserver
