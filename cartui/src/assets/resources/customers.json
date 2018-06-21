@@ -1,0 +1,34 @@
+{
+    "id": 1,
+    "customerName": "Hitesh Joshi",
+    "customerAge": 31,
+    "membershipId": null,
+    "customerPhoneNum": 951911009,
+    "altPhoneNum": null,
+    "address": [
+        {
+            "id": 1,
+            "apartmentName": "Vijaya Residency",
+            "streetName": "Allahpur",
+            "city": "Bangalore",
+            "state": "Karanataka",
+            "pinCode": 560037
+        },
+        {
+            "id": 4,
+            "apartmentName": "Hubris Residency",
+            "streetName": "HSR layout",
+            "city": "Bangalore",
+            "state": "Karanataka",
+            "pinCode": 560037
+        },
+        {
+            "id": 3,
+            "apartmentName": "Muir Road",
+            "streetName": "Near Bus stand",
+            "city": "Almora",
+            "state": "Uttarakhand",
+            "pinCode": 262501
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+<!-- <div class = "col col-md-6"> -->
+<h2>Your Account</h2>
+<div *ngIf= "user">
+    <dl class="row">
+   
+    <dt class="col-sm-3">Name :</dt>
+    <dd class="col-sm-9">{{user.customerName}}</dd>
+  
+    <dt class="col-sm-3">Primary Phone Number :</dt>
+    <dd class="col-sm-9">{{user.customerPhoneNum}}</dd>
+ 
+    </dl>
+    <div class="container">
+
+        <div class="row justify-content-between">
+          <div class="col-6">
+              <button type="button" class="btn btn-primary btn-lg btn-block"(click)="showHideUser()">
+                  <ng-container *ngIf="!displayAddres">Show</ng-container> <ng-container *ngIf="displayAddres">Hide</ng-container> Address</button>
+          </div>
+          <!-- <div class="col-4">
+            One of two columns
+          </div> -->
+        </div>  
+
+        <div *ngIf= "displayAddres" class="row justify-content-between">
+          <app-user-address [address]="user.address"></app-user-address>
+        </div>
+
+
+      </div>
+  </div>
+ 

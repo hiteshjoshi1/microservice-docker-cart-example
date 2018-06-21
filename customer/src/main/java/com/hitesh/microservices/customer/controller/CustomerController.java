@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hitesh.microservices.customer.client.InvoiceServiceClient;
@@ -47,8 +48,8 @@ public class CustomerController {
 		return customerRepository.findAll();
 	}
 
-	@RequestMapping(value="/customers/{id}", method= RequestMethod.GET, produces = "application/json")
-	public Customer getCustomerById(@PathVariable("id") String id){        
+	@RequestMapping(value="/customer", method= RequestMethod.GET, produces = "application/json")
+	public Customer getCustomerById(@RequestParam("id") String id){        
 		return customerRepository.findOne(Long.parseLong(id));
 	}
 
