@@ -25,6 +25,9 @@ public class InventoryController {
 
 	@Autowired
 	InventoryService inventoryService;
+	
+	
+	
 
 	@RequestMapping(value="/inventory", method= RequestMethod.GET, produces = "application/json")
 	public Iterable<Inventory> getAllinventory(){        

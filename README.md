@@ -64,7 +64,7 @@ All you need is docker , docker-compose, java and maven in the host machine.
 
 Direct web service endpoints
 - Eureka - http://localhost:1111/eureka
-- Customer - localhost:localhost:2222/customer 
+- Customer - localhost:2222/customer 
 - Inventory - http://localhost:3333/inventory
 - Invoice - http://localhost:4444/invoice
 - Config - http://localhost:5555/customer-service/dev

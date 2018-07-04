@@ -5,5 +5,8 @@
 
 export const environment = {
   production: false,
-  customersURL: 'assets/resources/customers.json'
+  customersURL: 'assets/resources/customer.json',
+  productsURL: 'assets/resources/products.json',
+  categoryURL: 'assets/resources/main-category.json',
+  fullCategoryURL:'assets/resources/full-category.json'
 };

@@ -1,0 +1,28 @@
+<ul class="products">
+    <li *ngFor="let prod of products">
+        <a href="#">
+            <img class= "img-thumbnail" src={{prod.imgUrl}}>
+            <h4>{{prod.productName}}</h4>
+            <p>Price : {{prod.purchasePrice | currency}}</p>
+            
+            <p *ngIf= "prod.brandName">Brand Name: {{prod.brandName}}</p>
+        </a>
+    </li>
+</ul>
+
+<!-- 
+productName: string;
+quantity: number;
+unitPrice: number;
+purchasePrice: number;
+taxRate: number;
+brandName: string;
+category: {
+    id: number;
+    categoryName: String;
+    controlled: boolean;
+    unitType: {
+        id: number;
+        unitName: string;
+    }
+} -->

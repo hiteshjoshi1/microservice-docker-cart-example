@@ -1,0 +1,59 @@
+[
+    {
+        "id": 1,
+        "productName": "Shirts",
+        "quantity": 50,
+        "unitPrice": 100,
+        "purchasePrice": 91,
+        "taxRate": 15,
+        "brandName": "Louis Phillipe",
+        "imgUrl":"../assets/images/shirt.jpg",
+        "category": {
+            "id": 2,
+            "categoryName": "VEGETABLES",
+            "controlled": false,
+            "unitType": {
+                "id": 2,
+                "unitName": "Per Kg"
+            }
+        }
+    },
+    {
+        "id": 2,
+        "productName": "Pants",
+        "quantity": 100,
+        "unitPrice": 100,
+        "purchasePrice": 91,
+        "taxRate": 15,
+        "brandName": "Louis Phillipe",
+        "imgUrl":"../assets/images/shirt.jpg",
+        "category": {
+            "id": 2,
+            "categoryName": "VEGETABLES",
+            "controlled": false,
+            "unitType": {
+                "id": 2,
+                "unitName": "Per Kg"
+            }
+        }
+    },
+    {
+        "id": 3,
+        "productName": "Shimla Apples",
+        "quantity": 1000,
+        "unitPrice": 10,
+        "purchasePrice": 9,
+        "taxRate": 4,
+        "brandName": null,
+        "imgUrl":"",
+        "category": {
+            "id": 3,
+            "categoryName": "MEDICINES",
+            "controlled": true,
+            "unitType": {
+                "id": 1,
+                "unitName": "Per Unit"
+            }
+        }
+    }
+]

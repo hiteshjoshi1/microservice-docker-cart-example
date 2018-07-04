@@ -9,6 +9,10 @@ import { UserDetailService } from './services/user-detail.service';
 import { HttpModule } from '@angular/http';
 import {HttpParams, HttpClient,  HttpClientModule} from '@angular/common/http';
 import { UserAddressComponent } from './user-address/user-address.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductDetailService } from './services/product-detail.service';
+import {CategoryService} from './services/category.service';
+
 
 
 
@@ -16,15 +20,16 @@ import { UserAddressComponent } from './user-address/user-address.component';
   declarations: [
     AppComponent,
     UserDetailComponent,
-    UserAddressComponent
-  ],
+    UserAddressComponent,
+    ProductDetailComponent
+     ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [UserDetailService],
+  providers: [UserDetailService,ProductDetailService,CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

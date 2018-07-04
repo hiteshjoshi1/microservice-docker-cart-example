@@ -5,27 +5,49 @@
         <i class="fa d-inline fa-lg fa-cloud"></i>
         <b>Shopping Cart</b>
       </a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent"
+      <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent"
         aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+      </button> -->
+      <div class="collapse navbar-collapse text-center" id="navbar2SupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href = "#">
-              <i class="fa d-inline fa-lg fa-bookmark-o"></i>User</a>
+          <li class="nav-item" *ngFor="let category of primaryCategories" >
+              <a class="nav-link" (mouseover)="showCategory(category.categoryId)"  routerLink="/{{category.categoryName}}" routerLinkActive="active">
+              <i class="fa d-inline fa-lg fa-bookmark-o"></i>
+              {{category.categoryName}}
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href = "#">
-              <i class="fa d-inline fa-lg fa-bookmark-o"></i>Cart</a>
+                 <a class="nav-link" routerLink="/user" routerLinkActive="active">
+              <i class="fa d-inline fa-lg fa-bookmark-o"></i>User</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="py-5 text-center opaque-overlay w-100">
 
-    <app-user-detail></app-user-detail>
+  <!-- "secondaryCatName": string,
+  "tertiaryCategories": [{
+          "id": number,
+          "categoryName": string
+  }] -->
+  
+  <div  *ngIf="isVisible" [ngClass]="currentClasses" (mouseleave)="hideCategories()">
+    <ul class = "desktop-navBlock" *ngFor = "let category of secondaryCategories">  
+      <li class = "secCategory">{{category.secondaryCatName}}</li>
+      <li>
+       <ul class *ngFor = "let terCategory of category.tertiaryCategories">
+        <li class = "terCategory">{{terCategory.categoryName}}</li>
+       </ul>
+      </li>
+    </ul>
+    </div>
+
+      <!-- <div class = "category-overlay" *ngIf="secondaryCategories">
+        
+     </div> -->
+
+  <div class="py-5 text-center">
     <router-outlet></router-outlet>
   </div>
 </div>

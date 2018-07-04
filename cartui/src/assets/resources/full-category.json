@@ -1,0 +1,219 @@
+[
+	{
+		"secondaryCatId": 5,
+		"secondaryCatName": "Fashion Accessories",
+		"tertiaryCategories": [
+			{
+				"id": 38,
+				"categoryName": "Wallets"
+			},
+			{
+				"id": 39,
+				"categoryName": "Belts"
+			},
+			{
+				"id": 40,
+				"categoryName": "Ties, Cufflinks & Pocket Squares"
+			},
+			{
+				"id": 41,
+				"categoryName": "Accessory Gift Sets"
+			},
+			{
+				"id": 42,
+				"categoryName": "Helmets"
+			},
+			{
+				"id": 43,
+				"categoryName": "Caps & Hats"
+			},
+			{
+				"id": 44,
+				"categoryName": "Mufflers, Scarves & Gloves"
+			},
+			{
+				"id": 45,
+				"categoryName": "Phone Cases"
+			},
+			{
+				"id": 46,
+				"categoryName": "Travel Accessories"
+			},
+			{
+				"id": 47,
+				"categoryName": "Rings & Wristwear"
+			}
+		]
+	},
+	{
+		"secondaryCatId": 4,
+		"secondaryCatName": "Sunglasses and Frames",
+		"tertiaryCategories": []
+	},
+	{
+		"secondaryCatId": 3,
+		"secondaryCatName": "Innerwear & Sleepwear",
+		"tertiaryCategories": [
+			{
+				"id": 26,
+				"categoryName": "Briefs & Trunks"
+			},
+			{
+				"id": 27,
+				"categoryName": "Boxers"
+			},
+			{
+				"id": 28,
+				"categoryName": "Vests"
+			},
+			{
+				"id": 29,
+				"categoryName": "Sleepwear & Loungewear"
+			},
+			{
+				"id": 30,
+				"categoryName": "Thermals"
+			},
+			{
+				"id": 31,
+				"categoryName": "Casual Shoes"
+			},
+			{
+				"id": 32,
+				"categoryName": "Sports Shoes"
+			},
+			{
+				"id": 33,
+				"categoryName": "Formal Shoes"
+			},
+			{
+				"id": 34,
+				"categoryName": "Sandals & Floaters"
+			},
+			{
+				"id": 35,
+				"categoryName": "Flip Flops"
+			},
+			{
+				"id": 36,
+				"categoryName": "Customizable Shoes"
+			},
+			{
+				"id": 37,
+				"categoryName": "Socks"
+			}
+		]
+	},
+	{
+		"secondaryCatId": 2,
+		"secondaryCatName": "Sports & Active Wear",
+		"tertiaryCategories": [
+			{
+				"id": 14,
+				"categoryName": "Active T-Shirts"
+			},
+			{
+				"id": 15,
+				"categoryName": "Track Pants & Shorts"
+			},
+			{
+				"id": 16,
+				"categoryName": "Jackets & Sweatshirts"
+			},
+			{
+				"id": 17,
+				"categoryName": "Swimwear"
+			},
+			{
+				"id": 18,
+				"categoryName": "Smart Wearables"
+			},
+			{
+				"id": 19,
+				"categoryName": "Sports Accessories"
+			},
+			{
+				"id": 20,
+				"categoryName": "Sports Equipment"
+			},
+			{
+				"id": 21,
+				"categoryName": "Sports Shoes"
+			},
+			{
+				"id": 22,
+				"categoryName": "Kurtas & Kurta Sets"
+			},
+			{
+				"id": 23,
+				"categoryName": "Sherwanis"
+			},
+			{
+				"id": 24,
+				"categoryName": "Nehru Jackets"
+			},
+			{
+				"id": 25,
+				"categoryName": "Dhoti"
+			}
+		]
+	},
+	{
+		"secondaryCatId": 1,
+		"secondaryCatName": "Topwear",
+		"tertiaryCategories": [
+			{
+				"id": 1,
+				"categoryName": "T-Shirts"
+			},
+			{
+				"id": 2,
+				"categoryName": "Casual Shirts"
+			},
+			{
+				"id": 3,
+				"categoryName": "Formal Shirts"
+			},
+			{
+				"id": 4,
+				"categoryName": "Sweaters & Sweatshirts"
+			},
+			{
+				"id": 5,
+				"categoryName": "Jackets"
+			},
+			{
+				"id": 6,
+				"categoryName": "Blazers & Coats"
+			},
+			{
+				"id": 7,
+				"categoryName": "Suits"
+			},
+			{
+				"id": 8,
+				"categoryName": "Clothing Fabric"
+			},
+			{
+				"id": 9,
+				"categoryName": "Jeans"
+			},
+			{
+				"id": 10,
+				"categoryName": "Casual Trousers"
+			},
+			{
+				"id": 11,
+				"categoryName": "Formal Trousers"
+			},
+			{
+				"id": 12,
+				"categoryName": "Shorts"
+			},
+			{
+				"id": 13,
+				"categoryName": "Track Pants/Joggers"
+			}
+		]
+	}
+]

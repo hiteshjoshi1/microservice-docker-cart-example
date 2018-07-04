@@ -15,8 +15,8 @@ displayAddres : boolean = false;
 
 
   constructor(private _userDetailService : UserDetailService) {  
-    this. _userDetailService.getCustomerDetails(1).subscribe(x => {
-      this.user = x
+    this. _userDetailService.getCustomerDetails(1).subscribe(res => {
+      this.user = res;
       console.log(this.user);
     }); 
    }

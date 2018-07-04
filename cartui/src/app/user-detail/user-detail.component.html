@@ -1,7 +1,7 @@
-<!-- <div class = "col col-md-6"> -->
+ <div class = "col-md-6 offset-md-3"> 
 <h2>Your Account</h2>
 <div *ngIf= "user">
-    <dl class="row">
+    <div class="row">
    
     <dt class="col-sm-3">Name :</dt>
     <dd class="col-sm-9">{{user.customerName}}</dd>
@@ -9,7 +9,7 @@
     <dt class="col-sm-3">Primary Phone Number :</dt>
     <dd class="col-sm-9">{{user.customerPhoneNum}}</dd>
  
-    </dl>
+    </div>
     <div class="container">
 
         <div class="row justify-content-between">
@@ -30,3 +30,4 @@
       </div>
   </div>
  
+</div>

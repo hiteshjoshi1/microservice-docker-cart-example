@@ -1,0 +1,18 @@
+[
+    {
+        "categoryName": "Men",
+        "categoryId": 1
+    },
+    {
+        "categoryName": "Women",
+        "categoryId": 2
+    },
+    {
+        "categoryName": "Kids",
+        "categoryId": 3
+    },
+    {
+        "categoryName": "Home & Living",
+        "categoryId": 4
+    }
+]

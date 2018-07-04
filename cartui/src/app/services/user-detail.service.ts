@@ -25,7 +25,8 @@ export class UserDetailService {
       }),
       catchError(error =>  {
       console.log('Error',error);
-        return Observable.of(null);}
+        return Observable.of(null);
+      }
       )
     );
   }

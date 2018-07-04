@@ -2,8 +2,57 @@
     overflow-x: hidden !important;
 }
 
-.py-5 {
+/* .py-5 {
     overflow-y: scroll;
     height:800px;
     background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg');
+} 
+*/
+
+/* .dropCategories {
+    border: 1px solid #eee;
+  }
+ .categoriesListHidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+.categoriesListVisible {
+  visibility: visible;
+  opacity: 1;
+} */
+
+
+.categories-shown {
+    border: 1px solid #eee;  
+    visibility: visible;
+    position:absolute;
+    background-color: #eee;
+
 }
+
+.categories-hidden {
+    border: 1px solid #eee;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.desktop-navBlock{
+    display: block;
+    position: relative;
+    float: left;
+    width: 230px;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.secCategory{
+    color:red;    
+}
+
+.terCategory{
+    list-style-type: none;
+}
+
