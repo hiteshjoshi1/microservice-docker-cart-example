@@ -9,6 +9,8 @@ USE microservices_prod;
 DROP TABLE IF EXISTS unit_type;
 CREATE TABLE IF NOT EXISTS unit_type(ID BIGINT AUTO_INCREMENT PRIMARY KEY, UNIT_NAME VARCHAR(200) NOT NULL);
 
+commit;
+
 DROP TABLE IF EXISTS categories;
 CREATE TABLE IF NOT EXISTS categories (
     ID BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -19,7 +21,7 @@ CREATE TABLE IF NOT EXISTS categories (
         REFERENCES unit_type (ID)
 );
 
-
+commit;
 
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE IF NOT EXISTS inventory (
@@ -33,6 +35,52 @@ CREATE TABLE IF NOT EXISTS inventory (
     BRAND_NAME VARCHAR(200),
     FOREIGN KEY (CATEGORY_ID)
         REFERENCES categories (ID)
+);
+
+commit;
+
+DROP TABLE IF EXISTS PRIMARY_PROD_CATEGORY;
+CREATE TABLE IF NOT EXISTS PRIMARY_PROD_CATEGORY (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CATEGORY_NAME VARCHAR(200) NOT NULL
+);
+
+commit;
+
+DROP TABLE IF EXISTS SECONDARY_PROD_CATEGORY;
+CREATE TABLE IF NOT EXISTS SECONDARY_PROD_CATEGORY (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CATEGORY_NAME VARCHAR(200) NOT NULL,
+    PRIMARY_CATEGORY_ID BIGINT NOT NULL,
+    FOREIGN KEY (PRIMARY_CATEGORY_ID)
+        REFERENCES PRIMARY_PROD_CATEGORY(ID)
+);
+
+commit;
+
+DROP TABLE IF EXISTS TERTIARY_PROD_CATEGORY;
+CREATE TABLE IF NOT EXISTS TERTIARY_PROD_CATEGORY (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CATEGORY_NAME VARCHAR(200) NOT NULL,
+    SECONDARY_CATEGORY_ID BIGINT NOT NULL,
+    FOREIGN KEY (SECONDARY_CATEGORY_ID)
+        REFERENCES SECONDARY_PROD_CATEGORY (ID)
+);
+
+commit;
+
+DROP TABLE IF EXISTS CLOTHING_PRODUCTS;
+CREATE TABLE IF NOT EXISTS CLOTHING_PRODUCTS (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    PRODUCT_NAME VARCHAR(200) NOT NULL,
+    QUANTITY_AVAILABLE BIGINT NOT NULL,
+    UNIT_PRICE DOUBLE(10,4),
+    CATEGORY_ID BIGINT NOT NULL,
+    BRAND_NAME VARCHAR(200)  NOT NULL,
+    SIZE VARCHAR(200),
+    PRODUCT_DETAILS VARCHAR(500),    
+    FOREIGN KEY (CATEGORY_ID)
+        REFERENCES TERTIARY_PROD_CATEGORY(ID)
 );
 
 commit;
@@ -96,158 +144,6 @@ INSERT INTO inventory(
     3); 
 commit;
 
-
-/*------------------------------------------ */
-
-CREATE SCHEMA microservices_invoice;
-
-USE microservices_invoice;
-
-DROP TABLE IF EXISTS mode_of_pay;
-CREATE TABLE IF NOT EXISTS mode_of_pay (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    MODE_NAME VARCHAR(100) NOT NULL,
-    MODE_DESC VARCHAR(500)
-);
-
-
-
-DROP TABLE IF EXISTS invoice;
-
-CREATE TABLE IF NOT EXISTS invoice (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    CUST_ID BIGINT NOT NULL,
-    DATE_OF_PURCHASE DATETIME,
-    MODE_PAY_ID BIGINT NOT NULL,
-    TOTAL_TAX_AMT INTEGER,
-    CASHIER_NAME VARCHAR(500),
-    FOREIGN KEY (MODE_PAY_ID)
-        REFERENCES mode_of_pay(ID)
-);
-
-/* Item_id is from Inventory table */
-DROP TABLE IF EXISTS orderitems;
-Create table if not exists orderitems (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-	INVOICE_ID BIGINT NOT NULL,
-	ITEM_ID BIGINT NOT NULL,
-    QUANTITY INTEGER(5),
-	TAX_AMT BIGINT,
-	TOTAL_COST BIGINT,
-    CONSTRAINT tb_fk FOREIGN KEY (INVOICE_ID)
-	REFERENCES invoice(ID)	
-);
-commit;
-
-insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Cash','OTC cash settlement');
-insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Card','OTC card settlement');
-insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Online','Online through payment gateway');
-insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Wallet','OTC through wallet');
-commit;
-
-insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(1,'2017-10-01 00:00:00',2,5,'Venu Babu');
-insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(1,'2017-10-11 00:00:00',3,4,'Ram Babu');
-insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(2,'2017-10-09 00:00:00',4,8,'Hari Babu');
-
-commit;
-
-insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT,TOTAL_COST) values(1,4,6,2.6,50);
-insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(2,3,9,3.9,100);
-insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(2,4,9,3.9,100);
-insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(1,3,9,3.9,100);
-
-commit;
-
-/* -----------------------------------------------------*/
-
-create schema microservices_cust;
-
-USE microservices_cust;
-
-DROP TABLE IF EXISTS customer;
-CREATE TABLE IF NOT EXISTS customer(ID BIGINT AUTO_INCREMENT PRIMARY KEY, CUST_NAME VARCHAR(400) NOT NULL,
-CUST_AGE INTEGER(3),MEMBERSHIP_ID BIGINT, CUST_PHONE_NUM BIGINT(10) NOT NULL, ALT_NUM BIGINT(10), PRIMARY_ADDR_ID BIGINT);
-
-
-DROP TABLE IF EXISTS address;
-CREATE TABLE IF NOT EXISTS address(ADDRESS_ID BIGINT AUTO_INCREMENT PRIMARY KEY, CUST_ID BIGINT NOT NULL,APARTMENT_NAME VARCHAR(500),
-STREET_NAME VARCHAR(800),CITY VARCHAR(200),STATE VARCHAR(20),PIN INTEGER(10), FOREIGN KEY(CUST_ID) REFERENCES customer(ID));
-
-commit;
-
-
-INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Hitesh Joshi',31,951911009); 
-
- INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Deepika Joshi',30,989220110); 
- commit;
-
-INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
- VALUES (1,'Vijaya Residency','Allahpur','Bangalore','Karanataka',560037);
- 
- INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
- VALUES (2,'Vijaya Residency','KareemNagar','Allahbad','UP',560037);
- 
- INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
- VALUES (1,'Muir Road','Near Bus stand','Almora','Uttarakhand',262501);
- 
- INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
- VALUES (1,'Hubris Residency','HSR layout','Bangalore','Karanataka',560037); 
- 
- commit;
- 
-UPDATE customer 
-SET 
-    PRIMARY_ADDR_ID = 1
-WHERE
-    ID = 1;
-commit;
-	
-
-use microservices_prod;
-
-
-DROP TABLE IF EXISTS PRIMARY_PROD_CATEGORY;
-CREATE TABLE IF NOT EXISTS PRIMARY_PROD_CATEGORY (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    CATEGORY_NAME VARCHAR(200) NOT NULL
-);
-
-
-DROP TABLE IF EXISTS SECONDARY_PROD_CATEGORY;
-CREATE TABLE IF NOT EXISTS secondary_prod_category (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    CATEGORY_NAME VARCHAR(200) NOT NULL,
-    PRIMARY_CATEGORY_ID BIGINT NOT NULL,
-    FOREIGN KEY (PRIMARY_CATEGORY_ID)
-        REFERENCES PRIMARY_PROD_CATEGORY(ID)
-);
-
-
-DROP TABLE IF EXISTS TERTIARY_PROD_CATEGORY;
-CREATE TABLE IF NOT EXISTS TERTIARY_PROD_CATEGORY (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    CATEGORY_NAME VARCHAR(200) NOT NULL,
-    SECONDARY_CATEGORY_ID BIGINT NOT NULL,
-    FOREIGN KEY (SECONDARY_CATEGORY_ID)
-        REFERENCES SECONDARY_PROD_CATEGORY (ID)
-);
-
-
-DROP TABLE IF EXISTS CLOTHING_PRODUCTS;
-CREATE TABLE IF NOT EXISTS CLOTHING_PRODUCTS (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-    PRODUCT_NAME VARCHAR(200) NOT NULL,
-    QUANTITY_AVAILABLE BIGINT NOT NULL,
-    UNIT_PRICE DOUBLE(10,4),
-    CATEGORY_ID BIGINT NOT NULL,
-    BRAND_NAME VARCHAR(200)  NOT NULL,
-    SIZE VARCHAR(200),
-    PRODUCT_DETAILS VARCHAR(500),    
-    FOREIGN KEY (CATEGORY_ID)
-        REFERENCES TERTIARY_PROD_CATEGORY(ID)
-);
-
-commit;
 
 
 INSERT INTO PRIMARY_PROD_CATEGORY(CATEGORY_NAME) VALUES('Men');
@@ -387,21 +283,21 @@ INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('
 INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Sunglasses',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Girls Footwear'));
 INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Frames',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Girls Footwear'));
 INSERT INTO SECONDARY_PROD_CATEGORY(CATEGORY_NAME,PRIMARY_CATEGORY_ID) VALUES('Brands',(select ID from PRIMARY_PROD_CATEGORY where CATEGORY_NAME='Kids'));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Mothercare',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Gini and Jony',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('U.S. Polo Assn. Kids',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('United Colors of Benetton',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('YK',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Allen Solly Junior',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Next',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Pepe Jeans',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Tommy Hilfiger',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('612 League',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Action Figures & Soft Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Learning & Development Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Toy Vehicles',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Activity & Construction Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Musical Toys & Ride Ons',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Mothercare',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Gini and Jony',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('U.S. Polo Assn. Kids',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('United Colors of Benetton',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('YK',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Allen Solly Junior',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Next',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Pepe Jeans',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Tommy Hilfiger',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('612 League',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Action Figures & Soft Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Learning & Development Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Toy Vehicles',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Activity & Construction Toys',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Musical Toys & Ride Ons',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Kids' ) ));
 INSERT INTO PRIMARY_PROD_CATEGORY(CATEGORY_NAME) VALUES('Home & Living');
 INSERT INTO SECONDARY_PROD_CATEGORY(CATEGORY_NAME,PRIMARY_CATEGORY_ID) VALUES('Bed Linen & Furnishing',(select ID from PRIMARY_PROD_CATEGORY where CATEGORY_NAME='Home & Living'));
 INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Bedsheets',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Bed Linen & Furnishing'));
@@ -439,22 +335,133 @@ INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('
 INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Organisers',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Home Décor'));
 INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Hooks & Holders',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Home Décor'));
 INSERT INTO SECONDARY_PROD_CATEGORY(CATEGORY_NAME,PRIMARY_CATEGORY_ID) VALUES('Brands',(select ID from PRIMARY_PROD_CATEGORY where CATEGORY_NAME='Home & Living'));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Bombay Dyeing',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Spaces',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Portico New York',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Pure Home & Living',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Swayam',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Raymond Home',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('At Home by Nilkamal',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Corelle',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Trident',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Cortina',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('WELHOME',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Random',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Home sparkle',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Tangerine',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Sej by Nisha Gupta',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
-INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('House This',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from primary_prod_category where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Bombay Dyeing',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Spaces',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Portico New York',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Pure Home & Living',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Swayam',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Raymond Home',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('At Home by Nilkamal',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Corelle',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Trident',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Cortina',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('WELHOME',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Random',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Home sparkle',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Tangerine',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('Sej by Nisha Gupta',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
+INSERT INTO TERTIARY_PROD_CATEGORY(CATEGORY_NAME,SECONDARY_CATEGORY_ID) VALUES('House This',(select ID from SECONDARY_PROD_CATEGORY where CATEGORY_NAME='Brands' and primary_category_id =(select id from PRIMARY_PROD_CATEGORY where category_name='Home & Living' ) ));
 commit;
 
+
+
+
+
+
+/*------------------------------------------ */
+
+CREATE SCHEMA microservices_invoice;
+
+USE microservices_invoice;
+
+
+DROP TABLE IF EXISTS mode_of_pay;
+CREATE TABLE IF NOT EXISTS mode_of_pay (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    MODE_NAME VARCHAR(100) NOT NULL,
+    MODE_DESC VARCHAR(500)
+);
+
+commit;
+
+DROP TABLE IF EXISTS invoice;
+
+CREATE TABLE IF NOT EXISTS invoice (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CUST_ID BIGINT NOT NULL,
+    DATE_OF_PURCHASE DATETIME,
+    MODE_PAY_ID BIGINT NOT NULL,
+    TOTAL_TAX_AMT INTEGER,
+    CASHIER_NAME VARCHAR(500),
+    FOREIGN KEY (MODE_PAY_ID)
+        REFERENCES mode_of_pay(ID)
+);
+commit;
+/* Item_id is from Inventory table */
+DROP TABLE IF EXISTS orderitems;
+Create table if not exists orderitems (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+	INVOICE_ID BIGINT NOT NULL,
+	ITEM_ID BIGINT NOT NULL,
+    QUANTITY INTEGER(5),
+	TAX_AMT BIGINT,
+	TOTAL_COST BIGINT,
+    CONSTRAINT tb_fk FOREIGN KEY (INVOICE_ID)
+	REFERENCES invoice(ID)	
+);
+commit;
+
+insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Cash','OTC cash settlement');
+insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Card','OTC card settlement');
+insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Online','Online through payment gateway');
+insert into mode_of_pay(MODE_NAME,MODE_DESC) values('Wallet','OTC through wallet');
+commit;
+
+insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(1,'2017-10-01 00:00:00',2,5,'Venu Babu');
+insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(1,'2017-10-11 00:00:00',3,4,'Ram Babu');
+insert into invoice(CUST_ID,DATE_OF_PURCHASE,MODE_PAY_ID,TOTAL_TAX_AMT,CASHIER_NAME) values(2,'2017-10-09 00:00:00',4,8,'Hari Babu');
+
+commit;
+
+insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT,TOTAL_COST) values(1,4,6,2.6,50);
+insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(2,3,9,3.9,100);
+insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(2,4,9,3.9,100);
+insert into orderitems(INVOICE_ID,ITEM_ID, QUANTITY,TAX_AMT, TOTAL_COST) values(1,3,9,3.9,100);
+
+commit;
+
+/* -----------------------------------------------------*/
+
+create schema microservices_cust;
+
+USE microservices_cust;
+
+DROP TABLE IF EXISTS customer;
+CREATE TABLE IF NOT EXISTS customer(ID BIGINT AUTO_INCREMENT PRIMARY KEY, CUST_NAME VARCHAR(400) NOT NULL,
+CUST_AGE INTEGER(3),MEMBERSHIP_ID BIGINT, CUST_PHONE_NUM BIGINT(10) NOT NULL, ALT_NUM BIGINT(10), PRIMARY_ADDR_ID BIGINT);
+commit;
+
+DROP TABLE IF EXISTS address;
+CREATE TABLE IF NOT EXISTS address(ADDRESS_ID BIGINT AUTO_INCREMENT PRIMARY KEY, CUST_ID BIGINT NOT NULL,APARTMENT_NAME VARCHAR(500),
+STREET_NAME VARCHAR(800),CITY VARCHAR(200),STATE VARCHAR(20),PIN INTEGER(10), FOREIGN KEY(CUST_ID) REFERENCES customer(ID));
+
+commit;
+
+
+INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Hitesh Joshi',31,951911009); 
+
+ INSERT INTO customer(CUST_NAME, CUST_AGE, CUST_PHONE_NUM) VALUES('Deepika Joshi',30,989220110); 
+
+
+INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
+ VALUES (1,'Vijaya Residency','Allahpur','Bangalore','Karanataka',560037);
+ 
+ INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
+ VALUES (2,'Vijaya Residency','KareemNagar','Allahbad','UP',560037);
+ 
+ INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
+ VALUES (1,'Muir Road','Near Bus stand','Almora','Uttarakhand',262501);
+ 
+ INSERT INTO address(CUST_ID,APARTMENT_NAME,STREET_NAME,CITY,STATE,PIN)
+ VALUES (1,'Hubris Residency','HSR layout','Bangalore','Karanataka',560037); 
+ 
+ commit;
+ 
+UPDATE customer 
+SET 
+    PRIMARY_ADDR_ID = 1
+WHERE
+    ID = 1;
+commit;
+	
 
