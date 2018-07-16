@@ -12,6 +12,10 @@ import { UserAddressComponent } from './user-address/user-address.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailService } from './services/product-detail.service';
 import {CategoryService} from './services/category.service';
+import { PrimaryCategoryLandingComponent } from './primary-category-landing/primary-category-landing.component';
+import { SecondaryCategoryLandingComponent } from './secondary-category-landing/secondary-category-landing.component';
+import { TertiaryCategoryLandingComponent } from './tertiary-category-landing/tertiary-category-landing.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -21,7 +25,11 @@ import {CategoryService} from './services/category.service';
     AppComponent,
     UserDetailComponent,
     UserAddressComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    PrimaryCategoryLandingComponent,
+    SecondaryCategoryLandingComponent,
+    TertiaryCategoryLandingComponent,
+    LoginComponent
      ],
   imports: [
     BrowserModule,

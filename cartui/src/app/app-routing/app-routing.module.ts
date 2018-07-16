@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { LoginComponent } from '../login/login.component';
 
 // Create a Route Array
 const routes: Routes = 
 [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path : 'user',component:UserDetailComponent },
+  {path:'signin', component: LoginComponent},
   //TODO - create Routes for all 3 Below
   { path : 'Men',component:ProductDetailComponent },
   { path : 'Women',component:ProductDetailComponent },
