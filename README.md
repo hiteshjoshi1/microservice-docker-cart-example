@@ -5,7 +5,9 @@
 
 This is proof of concept application where I am trying to build a very basic Shopping cart using microservices, the main intent is to setup microservices properly.
 
-What is achieved so far -
+Due to work and life, this project has taken a back seat. If you want to contribute, feel free to shoot me a PR.
+
+What is done so far -
 
 1. Broken the monolith into smaller microservices.
 2. Externalized config to a seprate git repository.
@@ -21,14 +23,18 @@ What is achieved so far -
 12. Angular SPA deployed on Edge gateway 
 	- http://localhost:1101/
 
-What I intend to do - 
+13. Make sure that you look at the other github repo which has all the externalized config for this project.
+14. Swagger Documentation on edge server.
 
-1. TODO add code to Angular SPA
-2. Securing the Microservices with OAuth 2 / Spring security.
-3. Distributed Log analysis with Elastic Search, logstash and Kibana
-4. Distributed Caching with Memacache/Hazelcast.
-5. CI/CD pipeline
-6. Find a cheap hosting platform and deploy this on cloud :)
+What I intend to do - 
+ 
+1. Securing the Microservices with OAuth 2 / Spring security.
+2. Distributed Log analysis with Elastic Search, logstash and Kibana
+3. Distributed Caching with Memacache/Hazelcast.
+4. CI/CD pipeline
+5. Find a cheap hosting platform and deploy this on cloud :)
+
+
 
 
 
