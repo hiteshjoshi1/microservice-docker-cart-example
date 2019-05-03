@@ -7,6 +7,9 @@ This is proof of concept application where I am trying to build a very basic Sho
 
 Due to work and life, this project has taken a back seat. If you want to contribute, feel free to shoot me a PR.
 
+- Your base computer should have mvn installed.
+- You should have docker installed and logged into docker registry to pull images.
+
 What is done so far -
 
 1. Broken the monolith into smaller microservices.
