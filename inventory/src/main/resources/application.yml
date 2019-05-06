@@ -24,7 +24,7 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/microservices_prod
+    url: jdbc:mysql://127.0.0.1:3306/microservices_prod
     username: root
     password: test
   jpa:
@@ -45,7 +45,10 @@ spring:
     password: test
   jpa:
     hibernate:
-      ddl-auto: none      
+      ddl-auto: none 
+      naming:
+       strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     
 eureka:
   client:
