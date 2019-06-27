@@ -30,7 +30,9 @@ What is done so far -
 14. Swagger Documentation on edge server.
 
 What I intend to do - 
- 
+Must DO - Deploy using kubernetes and helm
+
+Look at Load Balancing with Multiple regions , zones - https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html#spring-cloud-eureka-server-zones-and-regions
 1. Securing the Microservices with OAuth 2 / Spring security.
 2. Distributed Log analysis with Elastic Search, logstash and Kibana
 3. Distributed Caching with Memacache/Hazelcast.
